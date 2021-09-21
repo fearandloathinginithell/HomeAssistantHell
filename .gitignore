@@ -1,0 +1,21 @@
+# ignore everthing by default.
+*
+# Explict Include.
+!README.md
+!*.yaml
+!.gitignore
+!Assets
+!Assets/*
+!Assets/README/*
+!esphome
+!esphome/*
+!node-red
+!node-red/flows.json
+!python_scripts
+!python_scripts/shellies_discovery.py
+# Explit Exclude.
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+Assets/floorplans/house.jpg
+esphome/secrets.yaml

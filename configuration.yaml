@@ -1,0 +1,416 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+homeassistant:
+  name: "Château de Westra"
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: !secret elevation
+  unit_system: metric
+  currency: NZD
+  temperature_unit: C
+  time_zone: "Pacific/Auckland"
+  external_url: !secret external_url
+  internal_url: !secret internal_url
+  customize: !include customize.yaml
+  customize_glob: !include customize_glob.yaml
+  auth_mfa_modules:
+    - type: totp
+  
+recorder: !include recorder.yaml
+
+# NGINX Home Assistant SSL proxy
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - !secret trusted_proxies
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
+wake_on_lan:
+
+panasonic_viera:
+  host: !secret TVIP
+  name: Living Room TV
+  turn_on_action:
+    - service: wake_on_lan.send_magic_packet
+      data:
+        mac: !secret TVMAC
+
+# unifi protect
+stream:
+
+alexa:
+  smart_home:
+    locale: en-AU
+    endpoint: https://api.fe.amazonalexa.com/v3/events
+    filter:
+      # include_domains:
+      include_entities:
+        - switch.shelly_1_e09806967ca8_relay_0
+      # include_entity_globs:
+      # exclude_entities:
+    entity_config:
+      switch.shelly_1_e09806967ca8_relay_0:
+        display_categories: CONTACT_SENSOR
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+# group: !include groups.yaml # migrated to light-groups.yaml
+# https://www.home-assistant.io/docs/configuration/splitting_configuration/
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+# used by Shellies discovery (MQTT)
+python_script:
+
+# vera:
+#  vera_controller_url: !secret  vera_url
+#  exclude: [43, 44, 45, 47, 48, 51, 52, 54]
+#  lights: [50, 55]
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_user
+  password: !secret mqtt_password
+  discovery: true
+  discovery_prefix: homeassistant
+
+climate:
+# Heat Pump
+  - platform: sensibo
+    api_key: !secret sensibo_api
+
+cover:
+  - platform: command_line
+  # https://www.home-assistant.io/integrations/cover.command_line/
+  # One way blinds
+    covers:
+      blind_lounge_se:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Lounge South East
+      blind_bedroom_master:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Bedroom Master
+      blind_lounge_ne:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Lounge North  East
+      blind_dining_n:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Dining North
+      blind_dining_nw:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Dining North West
+  # Bi-directional blinds
+      blind_kitchen:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003s;'' ) >/dev/ttyUSB0 <&1"'
+#        command_state: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003r;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Kitchen
+#        value_template: >
+#          {% if value == '!123D003r0b0;' %}
+#          100
+#          {% elif value == '!123D003r100b180;' %}
+#          0
+#          {% endif %}
+
+switch:
+# Blind Control
+# Old blind configuration
+#  - platform: command_line
+#    switches:
+#      blind_bedroom_master:
+#        command_on: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006o;'' ) >/dev/ttyUSB0 <&1"'
+#        command_off: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006c;'' ) >/dev/ttyUSB0 <&1"'
+#        friendly_name: Blind Bedroom Master
+
+  - platform: template
+    switches:
+      # https://community.home-assistant.io/t/harmony-hub-activity/68392/9
+      # https://community.home-assistant.io/t/harmony-activities-volume-slider-and-lovelace/72419
+      # Sky TV Harmony Activity
+      har_watch_sky_tv:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Sky TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Watch Sky TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # XBOX Harmony Activity
+      har_play_xbox:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Play Xbox') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Play Xbox'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Apple TV Harmony Activity
+      har_watch_apple_tv:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Apple TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Watch Apple TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Freeview TV Harmony Activity
+      har_freeview_tv:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Freeview TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Freeview TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Radio Harmony Activity
+      har_radio:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Radio') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Radio'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Watch Netflix Harmony Activity
+      har_watch_netflix:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Netflix') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Watch Netflix'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Computer Harmony Activity
+      har_computer:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Computer') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Computer'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Computer Harmony Activity
+      har_vodafone_tv:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Vodafone TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Vodafone TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+
+light:
+  - platform: group
+    name: Living Room Sofa Lights
+    entities:
+      - light.lounge_sofa_left
+      - light.lounge_sofa_right
+  # Light Grouping
+light groups: !include light-groups.yaml
+
+# Switch to lights
+#  - platform: switch
+#    name: Bedside Light Right-Hand Switch
+#    entity_id: switch.shelly_1pm_40f52001c859_relay_0
+    
+
+input_select:
+# Device Trackers
+# https://bonani.tech/making-home-assistants-presence-detection-not-so-binary-node-red-version/
+  matt:
+    options:
+      - Home
+      - Just Arrived
+      - Just Left
+      - Away
+      - Extended Away
+  suze:
+    options:
+      - Home
+      - Just Arrived
+      - Just Left
+      - Away
+      - Extended Away
+
+camera:
+# Unifi protect
+# still https://xxx.xxx.xxx.xxx/snap.jpeg
+# stream rtsp://xxx.xxx.xxx.xxx:XXXX/{UNIQUE_ID}
+  - platform: generic
+    name: "Garage UniFi Camera"
+    #username: !secret Protect_Device_User
+    #password: !secret Protect_Device_Password
+    #authentication: digest
+    still_image_url: !secret garage_cam_image
+    stream_source: !secret garage_cam_stream
+    verify_ssl: false
+# Hikvission
+# stream rtsp://USER:PASSWORD@xxx.xxx.xxx.xxx:554/Streaming/Channels/101 
+# still http://xxx.xxx.xxx.xxx/ISAPI/Streaming/channels/101/picture
+  - platform: generic
+    name: "Rear door"
+    username: !secret viewer
+    password: !secret viewerpass
+    authentication: digest
+    still_image_url: !secret Rear_door_cam_image
+    stream_source: !secret Rear_door_cam_stream
+    verify_ssl: false
+#    #
+
+sensor:
+# Raspberry/Odroid Pi CPU Temp
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+    scan_interval: 10
+# Example configuration.yaml entry
+  - platform: systemmonitor
+    resources:
+      - type: memory_use_percent
+      - type: swap_use_percent
+      - type: processor_use
+      - type: processor_temperature
+      - type: last_boot
+
+# Device Trackers
+  - platform: template
+    sensors:
+      matt:
+        friendly_name: matt
+        value_template: "{{ states('input_select.matt') }}"
+      suze:
+        friendly_name: suze
+        value_template: "{{ states('input_select.suze') }}"
+# Garage Door Status
+  - platform: template
+    sensors:
+      garage_door_state:
+        friendly_name: "Garage Door"
+        value_template: >-
+          {% if states.binary_sensor.garage_roller_door_external_input.state == 'on' %}
+            Closed
+          {% else %}
+            Open
+          {% endif %}
+        icon_template: >-
+          {% if states.binary_sensor.garage_roller_door_external_input.state == 'on' %}
+            mdi:garage
+          {% else %}
+            mdi:garage-open
+          {% endif %}
+# Open sprinker
+  - platform: mqtt
+    name: "Sprinkler Pot Plants"
+    state_topic: "opensprinkler/station/0"
+    payload_not_available: "idle"
+    # value_template: "{{ value_json.state }}"
+    value_template: >-
+      {% if value_json.state == 1 %}
+        watering
+      {% else %}
+        idle
+      {% endif %}
+  - platform: mqtt
+    name: "Sprinkler Front Garden"
+    state_topic: "opensprinkler/station/1"
+    payload_not_available: "idle"
+    # value_template: "{{ value_json.state }}"
+    value_template: >-
+      {% if value_json.state == 1 %}
+        watering
+      {% else %}
+        idle
+      {% endif %}
+
+  # https://www.home-assistant.io/integrations/min_max
+  - platform: min_max
+    name: "avglroomtemp"
+    type: mean
+    round_digits: 1
+    entity_ids:
+      - sensor.motion_living_room_temperature
+      - sensor.motion_dining_d0170b01_temperature
+      - sensor.sensibo_temperature
+
+binary_sensor:
+# Motion sensor from Hikvission camera
+# https://www.home-assistant.io/integrations/hikvision/
+  - platform: hikvision
+    host: !secret cam1ip
+    username: !secret viewer
+    password: !secret viewerpass
+    port: 80
+    ssl: false
+    customize:
+      motion:
+        delay: 30
+      line_crossing:
+        ignored: true
+      field_detection:
+        ignored: true
+      disk_full:
+        ignored: true
+  
+# https://www.home-assistant.io/integrations/template/
+template:
+# https://community.home-assistant.io/t/expose-sensibo-sensors/154984/5
+  - sensor:
+      - name: "Sensibo Humidity"  
+        state: "{{ state_attr('climate.lounge_heat_pump', 'current_humidity') }}"
+        unit_of_measurement: '%'
+        icon: mdi:water-percent
+  - sensor:
+      - name: "Sensibo Temperature"  
+        state: "{{ state_attr('climate.lounge_heat_pump', 'current_temperature') }}"
+        unit_of_measurement: '°C'
+        icon: mdi:thermometer

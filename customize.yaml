@@ -1,0 +1,32 @@
+light.bedside_right_hand_light:
+  friendly_name: Bedside Right-Hand Light
+  icon: mdi:lightbulb
+light.hallway_lights:
+  friendly_name: Hallway Lights
+  icon: mdi:lightbulb-group-outline
+light.bathroom_lights:
+  friendly_name: Bathroom Lights
+  icon: mdi:lightbulb-group-outline
+light.living_room_lights:
+  friendly_name: Living Room Lights
+  icon: mdi:lightbulb-group-outline
+light.master_bedroom_lights:
+  friendly_name: Bedroom Master Lights
+  icon: mdi:lightbulb-group-outline
+light.bedroom_north_east_lights:
+  friendly_name: Bedroom North East Lights
+  icon: mdi:lightbulb-group-outline
+light.bedroom_south_west_lights:
+  friendly_name: Bedroom South West Lights
+  icon: mdi:lightbulb-group-outline
+light.toilet_lights:
+  friendly_name: Toilet Lights
+  icon: mdi:lightbulb-group-outline
+light.garage_lights:
+  friendly_name: Garage Lights
+  icon: mdi:lightbulb-group-outline
+light.living_room_sofa_lights:
+  friendly_name: Sofa Lights
+  icon: mdi:lightbulb-multiple
+sensor.avglroomtemp:
+  icon: hass:thermometer
