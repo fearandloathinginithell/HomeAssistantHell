@@ -1,4 +1,5 @@
 # Home Assistant
+I'm home grown in ![NZ Flag](https://github.com/oxguy3/flags/blob/master/mini/nz.png) You'll generally see NZ links. I enjoy tinkering in Home Assistant in my down time. If you find something useful in here, Yay!
 
 ## Hardware
 * [ODROID-N2+ with 4GByte RAM](https://www.hardkernel.com/shop/odroid-n2-with-4gbyte-ram-2/)
@@ -7,6 +8,12 @@
 ### DD7002B WIFI Bridge
 * [EZSync010](https://purenitetech.com/product/ezsync010/)
 * [WIFI Bridge DD7002B](https://www.ismartwindow.co.nz/DD7002B_WIFI_bridge.html)
+### Shelly
+* [Shelly 1](https://shelly.cloud/products/shelly-1-smart-home-automation-relay/)
+* [Shelly 1PM](https://shelly.cloud/products/shelly-1pm-smart-home-automation-relay/)
+* [Shelly 2.5](https://shelly.cloud/products/shelly-25-smart-home-automation-relay/)
+* [Shelly Dimmer 2](https://shelly.cloud/products/shelly-dimmer-2-smart-home-light-controller/)
+* [Shelly Button1](https://shelly.cloud/products/shelly-button-1-smart-home-automation-device/)
 ### Zigbee
 * [Zigbee USB gateway ConBee II](https://www.phoscon.de/en/conbee2)
 * [Philips Hue](https://www.philips-hue.com/en-nz)
@@ -77,7 +84,10 @@ Working Home Assistant configuration
 ![iOS_blinds](/Assets/README/iOS_Blinds2.png)
 #### configuration.yaml
 https://www.home-assistant.io/integrations/cover.command_line/
-```
+```yaml
+default_config:
+homeassistant:
+  customize_glob: !include customize_glob.yaml
 cover:
   - platform: command_line
   # One way blinds
@@ -94,7 +104,7 @@ cover:
         friendly_name: Bedroom Master
 ```
 #### customize_glob.yaml
-```
+```yaml
 cover.blind_lounge_se:
   icon: mdi:blinds
 cover.bedroom_*:
