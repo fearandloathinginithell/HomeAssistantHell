@@ -50,8 +50,8 @@ EZsync010 was terminated to a RJ9/4P4C plug
 
 '-' denotes not in use
 Further Documentation:
-* ![DD7002B](/Assets/README/DD7002B_Docs)
-* ![EZSync010](/Assets/README/EZsync010_Docs)
+* [DD7002B](/Assets/README/DD7002B_Docs)
+* [EZSync010](/Assets/README/EZsync010_Docs)
 
 
 ![EZSync010](/Assets/README/EZSync010.jpeg)
