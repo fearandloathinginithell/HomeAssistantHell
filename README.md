@@ -1,5 +1,5 @@
 # Home Assistant
-I'm home grown in ![NZ Flag](https://github.com/oxguy3/flags/blob/master/mini/nz.png) You'll generally see NZ links. I enjoy tinkering in Home Assistant in my down time. If you find something useful in here, Yay!
+I'm home grown in New Zealand ![NZ Flag](https://github.com/oxguy3/flags/blob/master/mini/nz.png) You'll generally see NZ links. I enjoy tinkering in Home Assistant in my down time. If you find something useful in here, Yay!
 
 ## Hardware
 * [ODROID-N2+ with 4GByte RAM](https://www.hardkernel.com/shop/odroid-n2-with-4gbyte-ram-2/)
@@ -31,7 +31,7 @@ Additonal components:
 Including the hardware discussed here:
 https://github.com/klaasnicolaas/home-assistant-glow
 No additonal changes made to Klaas's configuration
-## DD7002B WIFI Bridge
+## RS485 control of the DD7002B WIFI Bridge
 ### Requirements
 * DD7002B WIFI Bridge firmware 0.8.0 or greater
 * EZSync010 or other RS485 bridge
@@ -50,23 +50,20 @@ EZsync010 was terminated to a RJ9/4P4C plug
 
 '-' denotes not in use
 
+![EZSync010](/Assets/README/EZSync010.jpeg)
+
 Further Documentation:
 
 * [DD7002B](/Assets/README/DD7002B_Docs)
 * [EZSync010](/Assets/README/EZsync010_Docs)
-
-
-![EZSync010](/Assets/README/EZSync010.jpeg)
 
 ### Drivers
 #### macOS Catalina
 No additional drivers required
 #### Windows 10 1909
 Drivers for chipset https://www.ftdichip.com/FTDrivers.htm
-
 #### Raspberry Pi
 No additional drivers required
-
 #### ODROID-N2+
 No additional drivers required
 
@@ -79,7 +76,7 @@ sudo apt-get install screen
 screen /dev/ttyUSB0 9600
 ```
 ### Connecting to Bridge macOS Catalina
-List USB devices to retreive the name of the EZSync010
+List USB devices in the OS to retreive the device name of the EZSync010 assigned in the OS.
 
 ```Shell
 ls /dev/tty.*
@@ -89,6 +86,13 @@ Connect to EZSync010 and specify the baud rate
 ```Shell
 screen /dev/tty.usbserial-AB0KFHEJ 9600
 ```
+### Blind information
+
+| Value  | Description |
+| ------------- | ------------- |
+| !123D005vZ10  | Lounge 1, One Way Blind |
+| !123D006vZ10  | Bedroom, One Way Blind |
+| !123D003vU10  | Kitchen Blind, Two Way Blind |
 ### Issue Commands
 #### Query Bridge
 ```Shell
@@ -98,17 +102,23 @@ screen /dev/tty.usbserial-AB0KFHEJ 9600
 ```Shell
 !123D001vZ10;!123D002vZ10;!123D003vU10;!123DFFFv000;
 ```
-### Blind information
-| Value  | Description |
-| ------------- | ------------- |
-| !123D001vZ10  | Dining Room 1, One Way Blind |
-| !123D002vZ10  | Dining Room 2, One Way Blind |
-| !123D003vU10  | Kitchen Blind, Two Way Blind |
-| !123DFFFv000  | Unknown |
-
-### Home Assistant
-Working Home Assistant configuration
-
+#### Open a Blind
+```Shell
+!123D003vU10o;
+```
+#### Close a Blind
+```Shell
+!123D003vU10c;
+```
+#### Stop a Blind
+```Shell
+!123D003vU10s;
+```
+#### Query a bidirectional Blind postion
+```Shell
+!123D003vU10q;
+```
+### Control blinds with Home Assistant
 ![iOS_blinds](/Assets/README/iOS_Blinds2.png)
 #### configuration.yaml
 https://www.home-assistant.io/integrations/cover.command_line/
