@@ -35,6 +35,24 @@ No additonal changes made to Klaas's configuration
 ### Requirements
 * DD7002B WIFI Bridge firmware 0.8.0 or greater
 * EZSync010 or other RS485 bridge
+#### Wiring EZSync010 to DD7002B, RS485 Interface
+EZsync010 was terminated to a RJ9/4P4C plug
+
+| EZSync010 | RJ9/4P4C | Function |
+| ------------- | ------------- | ------------- |
+| Black | 1 | Ground |
+| - | 2 | - |
+| Orange | 3 | 485A |
+| Yellow | 4 | 485B |
+| Red | - | Power |
+| Brown | - | Terminator 1 |
+| Green | - | Terminator 2 |
+
+'-' denotes not in use
+Further Documentation:
+* ![DD7002B](/Assets/README/DD7002B_Docs)
+* ![EZSync010](/Assets/README/EZsync010_Docs)
+
 
 ![EZSync010](/Assets/README/EZSync010.jpeg)
 

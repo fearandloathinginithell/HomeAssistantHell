@@ -7,6 +7,8 @@
 !Assets
 !Assets/*
 !Assets/README/*
+!Assets/README/DD7002B_Docs/*
+!Assets/README/EZsync010_Docs/*
 !esphome
 !esphome/*
 !node-red
