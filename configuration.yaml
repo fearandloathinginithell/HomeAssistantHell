@@ -20,6 +20,8 @@ homeassistant:
 recorder: !include recorder.yaml
 
 # NGINX Home Assistant SSL proxy
+# trusted_proxies: # Example
+#   - 172.40.44.0/24 # Example
 http:
   use_x_forwarded_for: true
   trusted_proxies:
@@ -40,6 +42,7 @@ panasonic_viera:
 # unifi protect
 stream:
 
+# Need to come back to configuring this.
 alexa:
   smart_home:
     locale: en-AU
@@ -306,14 +309,14 @@ camera:
 #    #
 
 sensor:
-# Raspberry/Odroid Pi CPU Temp
+# Raspberry Pi, Odroid CPU Temp
   - platform: command_line
     name: CPU Temperature
     command: "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
     scan_interval: 10
-# Example configuration.yaml entry
+# https://www.home-assistant.io/integrations/systemmonitor/
   - platform: systemmonitor
     resources:
       - type: memory_use_percent
@@ -323,6 +326,7 @@ sensor:
       - type: last_boot
 
 # Device Trackers
+# https://bonani.tech/making-home-assistants-presence-detection-not-so-binary-node-red-version/
   - platform: template
     sensors:
       matt:
@@ -404,11 +408,13 @@ binary_sensor:
 # https://www.home-assistant.io/integrations/template/
 template:
 # https://community.home-assistant.io/t/expose-sensibo-sensors/154984/5
+# Expose Humidity from sensibo Controller
   - sensor:
       - name: "Sensibo Humidity"  
         state: "{{ state_attr('climate.lounge_heat_pump', 'current_humidity') }}"
         unit_of_measurement: '%'
         icon: mdi:water-percent
+# Expose Temperature from Sensibo Contoller
   - sensor:
       - name: "Sensibo Temperature"  
         state: "{{ state_attr('climate.lounge_heat_pump', 'current_temperature') }}"

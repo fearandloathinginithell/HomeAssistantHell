@@ -8,6 +8,11 @@ I'm home grown in ![NZ Flag](https://github.com/oxguy3/flags/blob/master/mini/nz
 ### DD7002B WIFI Bridge
 * [EZSync010](https://purenitetech.com/product/ezsync010/)
 * [WIFI Bridge DD7002B](https://www.ismartwindow.co.nz/DD7002B_WIFI_bridge.html)
+### OpenSprinkler
+* [OpenSprinkler OS3.0 AC-Powered](https://opensprinkler.com/product/opensprinkler/)
+* [Ring AC Power Adapter](https://ring.com/au/en/products/video-doorbell-plugin-adapter-gen-2) I'm actually using the first generation power adapter for a 'Ring Video Doorbell Pro'
+* [Pope 25mm Solenoid Valve With Flow Control](https://www.popeproducts.com.au/irrigation/automated-control-and-accessories/valves/25-mm-solenoid-valve-with-flow-control)
+
 ### Shelly
 * [Shelly 1](https://shelly.cloud/products/shelly-1-smart-home-automation-relay/)
 * [Shelly 1PM](https://shelly.cloud/products/shelly-1pm-smart-home-automation-relay/)
@@ -19,10 +24,13 @@ I'm home grown in ![NZ Flag](https://github.com/oxguy3/flags/blob/master/mini/nz
 * [Philips Hue](https://www.philips-hue.com/en-nz)
 
 ## Home Assistant Glow 🌟
-Waiting on Hardware
+Additonal components:
+* [IP65 Sealed ABS Enclosure](https://www.jaycar.co.nz/ip65-sealed-abs-enclosures-dark-grey-with-mounting-flange-64x58x35mm/p/HB6121)
+* [Vented ABS Enclosure](https://www.jaycar.co.nz/grey-vented-abs-enclosure-40-x-40-x-20mm/p/HB6114)
 
+Including the hardware discussed here:
 https://github.com/klaasnicolaas/home-assistant-glow
-
+No additonal changes made to Klaas's configuration
 ## DD7002B WIFI Bridge
 ### Requirements
 * DD7002B WIFI Bridge firmware 0.8.0 or greater
@@ -110,7 +118,17 @@ cover.blind_lounge_se:
 cover.bedroom_*:
   icon: mdi:blinds
 ```
-## Shellies Discovery
-Migrated to native Shelly Intergration
+## Shelly
 
+Shelly API Documentation https://shelly-api-docs.shelly.cloud/
+
+Shelly Gen 1 Firmware Change Log https://shelly-api-docs.shelly.cloud/gen1/#changelog
+
+Shelly Gen 2 Firmware Change Log https://shelly-api-docs.shelly.cloud/gen2/changelog
+### Shellies Discovery
+Migrated to native Shelly Intergration
 https://github.com/bieniu/ha-shellies-discovery
+### CoIoT
+Be sure to configure Home Assistant IP address and port don't use Multicast
+
+![CoIoT Settings](/Assets/README/CoLot.png)

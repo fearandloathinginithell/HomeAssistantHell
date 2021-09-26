@@ -42,7 +42,6 @@
     entities:
       - light.toilet
   - platform: group
-    name: Bedside Right-Hand Light
+    name: Living Room Lights
     entities:
-      - light.bedside_light_right_hand_switch
-      - light.hue_filament_bulb_1
+      - light.dining_north_west
