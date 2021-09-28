@@ -37,6 +37,7 @@ Including the hardware discussed here:
 https://github.com/klaasnicolaas/home-assistant-glow
 No additonal changes made to Klaas's configuration
 ## MQTT ~~control~~ monitoring of OpenSprinkler
+Open Sprinkler MQTT [documentation](https://openthings.freshdesk.com/support/solutions/articles/5000859089-how-to-use-mqtt)
 ### Requirements
 * OpenSprinkler OS3.0
 * https://github.com/home-assistant/addons/tree/master/mosquitto
@@ -50,7 +51,6 @@ sensor:
   - platform: mqtt
     name: "Sprinkler Pot Plants"
     state_topic: "opensprinkler/station/0"
-    payload_not_available: "idle"
     value_template: >-
       {% if value_json.state == 1 %}
         watering
