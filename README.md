@@ -5,6 +5,21 @@ I'm home grown in New Zealand ![NZ Flag](https://github.com/oxguy3/flags/blob/ma
 * [ODROID-N2+ with 4GByte RAM](https://www.hardkernel.com/shop/odroid-n2-with-4gbyte-ram-2/)
 * [128GB eMMC Module N2 Linux](https://www.hardkernel.com/shop/128gb-emmc-module-n2-linux-2/)
 * [USB3.0 eMMC Module Writer](https://www.hardkernel.com/shop/usb3-0-emmc-module-writer/) used to flash Home Assistant onto the eMMC module.
+### Previous Server Hardware
+* [Raspberry Pi 4 Model B 4GByte RAM](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/?variant=raspberry-pi-4-model-b-4gb
+* [PoE+ HAT](https://www.raspberrypi.org/products/poe-plus-hat/)
+* [Argon NEO Raspberry Pi 4 Case](https://www.amazon.com/Argon-Raspberry-Heatsink-Supports-Accessible/dp/B07WMG27T7) 
+
+### Software Components
+* [MariaDB running in a Docker Container](https://hub.docker.com/_/mariadb)
+* [ESPHome](https://esphome.io/)
+* [Mosquitto broker](https://github.com/home-assistant/addons/tree/master/mosquitto)
+* [NGINX Home Assistant SSL proxy](https://github.com/home-assistant/addons/tree/master/nginx_proxy)
+* [Samba share](https://github.com/home-assistant/addons/tree/master/samba)
+* [Terminal & SSH](https://github.com/home-assistant/addons/tree/master/ssh)
+* [Node-RED](https://github.com/hassio-addons/addon-node-red)
+* [Visual Studio Code](https://github.com/hassio-addons/addon-vscode)
+
 ### DD7002B WIFI Bridge
 Jump to: [RS485 control of the DD7002B WIFI Bridge](#rs485-control-of-the-dd7002b-wifi-bridge)
 
@@ -38,6 +53,8 @@ https://github.com/klaasnicolaas/home-assistant-glow
 No additonal changes made to Klaas's configuration
 ## MQTT ~~control~~ monitoring of OpenSprinkler
 Open Sprinkler MQTT [documentation](https://openthings.freshdesk.com/support/solutions/articles/5000859089-how-to-use-mqtt)
+
+![Opensprinkler](Assets/README/OpenSprinkler.png)
 ### Requirements
 * OpenSprinkler OS3.0
 * https://github.com/home-assistant/addons/tree/master/mosquitto

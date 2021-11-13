@@ -44,4 +44,6 @@
   - platform: group
     name: Living Room Lights
     entities:
+      - light.lounge_south_east
+      - light.lounge_north_east
       - light.dining_north_west
