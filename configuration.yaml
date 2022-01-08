@@ -328,23 +328,8 @@ sensor:
       suze:
         friendly_name: suze
         value_template: "{{ states('input_select.suze') }}"
-# Garage Door Status
-  - platform: template
-    sensors:
-      garage_door_state:
-        friendly_name: "Garage Door"
-        value_template: >-
-          {% if states.binary_sensor.garage_roller_door_external_input.state == 'on' %}
-            Closed
-          {% else %}
-            Open
-          {% endif %}
-        icon_template: >-
-          {% if states.binary_sensor.garage_roller_door_external_input.state == 'on' %}
-            mdi:garage
-          {% else %}
-            mdi:garage-open
-          {% endif %}
+
+
 # Open sprinker
   - platform: mqtt
     name: "Sprinkler Pot Plants"
@@ -396,8 +381,31 @@ binary_sensor:
       disk_full:
         ignored: true
   
-# https://www.home-assistant.io/integrations/template/
 template:
+# https://www.home-assistant.io/integrations/template/
+
+  - binary_sensor:
+      - name: "Front Door UA"
+        device_class: door
+        # https://www.home-assistant.io/integrations/binary_sensor/#device-class
+        state: >
+          {% if is_state('binary_sensor.front_door_external_input', 'off') %}
+            on
+          {% elif is_state('binary_sensor.front_door_external_input', 'on') %}
+            off
+          {% endif %}
+        # https://www.home-assistant.io/integrations/template/#multiline-example-with-an-if-test
+
+  - binary_sensor:
+      - name: "Garage Door"
+        device_class: garage_door
+        state: >
+          {% if is_state('binary_sensor.garage_roller_door_external_input', 'off') %}
+            on
+          {% elif is_state('binary_sensor.garage_roller_door_external_input', 'on') %}
+            off
+          {% endif %}
+
 # https://community.home-assistant.io/t/expose-sensibo-sensors/154984/5
 # Expose Humidity from sensibo Controller
   - sensor:
@@ -411,3 +419,8 @@ template:
         state: "{{ state_attr('climate.lounge_heat_pump', 'current_temperature') }}"
         unit_of_measurement: '°C'
         icon: mdi:thermometer
+
+# For future reference        
+# sensor.sprinkler_pot_plants
+# {% if value_json.state == 1 %}
+# {{ is_state('sensor.sprinkler_pot_plants', '1') }}

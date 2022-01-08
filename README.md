@@ -40,6 +40,7 @@ Jump to: [Shelly](#shelly)
 * [Shelly Dimmer 2](https://shelly.cloud/products/shelly-dimmer-2-smart-home-light-controller/)
 * [Shelly Button1](https://shelly.cloud/products/shelly-button-1-smart-home-automation-device/)
 ### Zigbee
+Jump to: [ZHA](#ZHA)
 * [Zigbee USB gateway ConBee II](https://www.phoscon.de/en/conbee2)
 * [Philips Hue](https://www.philips-hue.com/en-nz)
 
@@ -210,3 +211,7 @@ Initially used https://github.com/bieniu/ha-shellies-discovery and MQTT which wo
 Be sure to configure Home Assistant IP address and port don't use Multicast
 
 ![CoIoT Settings](/Assets/README/CoLot.png)
+
+## ZHA
+
+ConBee II Firmware Change Log https://github.com/dresden-elektronik/deconz-rest-plugin/wiki/Firmware-Changelog
