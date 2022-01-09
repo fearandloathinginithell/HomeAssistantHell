@@ -330,27 +330,31 @@ sensor:
         value_template: "{{ states('input_select.suze') }}"
 
 
-# Open sprinker
+  # Open sprinker
+  # https://www.home-assistant.io/integrations/sensor.mqtt/
   - platform: mqtt
-    name: "Sprinkler Pot Plants"
+    name: "OpenSprinkler Station 0"
+    # "Pot Plants"
     state_topic: "opensprinkler/station/0"
-    # value_template: "{{ value_json.state }}"
-    value_template: >-
-      {% if value_json.state == 1 %}
-        watering
-      {% else %}
-        idle
-      {% endif %}
+    value_template: "{{ value_json.state }}"
+
   - platform: mqtt
-    name: "Sprinkler Front Garden"
+    name: "OpenSprinkler Station 1"
+    # "Front Garden"
     state_topic: "opensprinkler/station/1"
-    # value_template: "{{ value_json.state }}"
-    value_template: >-
-      {% if value_json.state == 1 %}
-        watering
-      {% else %}
-        idle
-      {% endif %}
+    value_template: "{{ value_json.state }}"
+  
+  - platform: mqtt
+    name: "OpenSprinkler Station 0 Last Watering Time"
+    state_topic: "opensprinkler/station/0"
+    value_template: "{{ value_json.duration }}"
+    icon: mdi-timer-sand-complete
+  
+  - platform: mqtt
+    name: "OpenSprinkler Station 1 Last Watering Time"
+    state_topic: "opensprinkler/station/1"
+    value_template: "{{ value_json.duration }}"
+    icon: mdi-timer-sand-complete
 
   # https://www.home-assistant.io/integrations/min_max
   - platform: min_max
@@ -420,7 +424,42 @@ template:
         unit_of_measurement: '°C'
         icon: mdi:thermometer
 
+# Open Sprinkler status MQTT
+# Dealing with unknown status
+# https://www.home-assistant.io/integrations/template/#startup
+# ICON
+# https://www.home-assistant.io/integrations/template/#change-the-icon-when-a-state-changes
+  - sensor:
+      - name: "Watering Pot Plants"
+        state: >
+          {% if is_state('sensor.opensprinkler_station_0', '1') %}
+            watering
+          {% elif is_state('sensor.opensprinkler_station_0', '0') %}
+            idle
+          {% else %}
+            standby
+          {% endif %}
+        icon: >
+          {% if is_state("sensor.watering_pot_plants", "watering") %}
+            mdi:sprinkler-variant
+          {% else %}
+            mdi:sprinkler
+          {% endif %}
+
+  - sensor:
+      - name: "Watering Front Garden"
+        state: >
+          {% if is_state('sensor.opensprinkler_station_1', '1') %}
+            watering
+          {% elif is_state('sensor.opensprinkler_station_1', '0') %}
+            idle
+          {% else %}
+            standby
+          {% endif %}
+        icon: >
+          {% if is_state("sensor.watering_front_garden", "watering") %}
+            mdi:sprinkler-variant
+          {% else %}
+            mdi:sprinkler
+          {% endif %}
 # For future reference        
-# sensor.sprinkler_pot_plants
-# {% if value_json.state == 1 %}
-# {{ is_state('sensor.sprinkler_pot_plants', '1') }}

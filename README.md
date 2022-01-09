@@ -61,25 +61,36 @@ Open Sprinkler MQTT [documentation](https://openthings.freshdesk.com/support/sol
 * https://github.com/home-assistant/addons/tree/master/mosquitto
 #### configuration.yaml
 https://www.home-assistant.io/integrations/sensor.mqtt/
+https://www.home-assistant.io/integrations/template/
+https://www.home-assistant.io/integrations/template/#startup
+https://www.home-assistant.io/integrations/template/#change-the-icon-when-a-state-changes
 ```yaml
 default_config:
 homeassistant:
   customize_glob: !include customize_glob.yaml
 sensor:
   - platform: mqtt
-    name: "Sprinkler Pot Plants"
+    name: "OpenSprinkler Station 0"
+    # "Pot Plants"
     state_topic: "opensprinkler/station/0"
-    value_template: >-
-      {% if value_json.state == 1 %}
-        watering
-      {% else %}
-        idle
-      {% endif %}
-```
-#### customize_glob.yaml
-```yaml
-sensor.sprinkler_*:
-  icon: mdi:sprinkler-variant
+    value_template: "{{ value_json.state }}"
+template:
+  - sensor:
+      - name: "Watering Pot Plants"
+        state: >
+          {% if is_state('sensor.opensprinkler_station_0', '1') %}
+            watering
+          {% elif is_state('sensor.opensprinkler_station_0', '0') %}
+            idle
+          {% else %}
+            standby
+          {% endif %}
+        icon: >
+          {% if is_state("sensor.watering_pot_plants", "watering") %}
+            mdi:sprinkler-variant
+          {% else %}
+            mdi:sprinkler
+          {% endif %}
 ```
 ## RS485 control of the DD7002B WIFI Bridge
 ### Requirements

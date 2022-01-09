@@ -6,5 +6,3 @@ cover.kitchen:
   icon: mdi:blinds
 cover.bedroom_*:
   icon: mdi:blinds
-sensor.sprinkler_*:
-  icon: mdi:sprinkler-variant
