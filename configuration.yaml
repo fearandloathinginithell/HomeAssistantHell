@@ -348,13 +348,13 @@ sensor:
     name: "OpenSprinkler Station 0 Last Watering Time"
     state_topic: "opensprinkler/station/0"
     value_template: "{{ value_json.duration }}"
-    icon: mdi-timer-sand-complete
+    icon: mdi:timer-sand-complete
   
   - platform: mqtt
     name: "OpenSprinkler Station 1 Last Watering Time"
     state_topic: "opensprinkler/station/1"
     value_template: "{{ value_json.duration }}"
-    icon: mdi-timer-sand-complete
+    icon: mdi:timer-sand-complete
 
   # https://www.home-assistant.io/integrations/min_max
   - platform: min_max
@@ -462,4 +462,4 @@ template:
           {% else %}
             mdi:sprinkler
           {% endif %}
-# For future reference        
+  
