@@ -1,0 +1,110 @@
+  - platform: template
+    switches:
+      # https://community.home-assistant.io/t/harmony-hub-activity/68392/9
+      # https://community.home-assistant.io/t/harmony-activities-volume-slider-and-lovelace/72419
+      # Sky TV Harmony Activity
+      har_watch_sky_tv:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Sky TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Watch Sky TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+    
+
+      # XBOX Harmony Activity
+      har_play_xbox:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Play Xbox') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Play Xbox'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Apple TV Harmony Activity
+      har_watch_apple_tv:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Apple TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Watch Apple TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Freeview TV Harmony Activity
+      har_freeview_tv:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Freeview TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Freeview TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Radio Harmony Activity
+      har_radio:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Radio') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Radio'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Watch Netflix Harmony Activity
+      har_watch_netflix:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Netflix') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Watch Netflix'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Computer Harmony Activity
+      har_computer:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Computer') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Computer'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'
+      # Computer Harmony Activity
+      har_vodafone_tv:
+        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Vodafone TV') }}"
+        turn_on:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'Vodafone TV'
+        turn_off:
+          service: remote.turn_on
+          data:
+            entity_id: remote.media_centre
+            activity: 'PowerOff'

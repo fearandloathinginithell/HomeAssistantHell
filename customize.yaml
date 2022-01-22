@@ -28,5 +28,6 @@ light.garage_lights:
 light.living_room_sofa_lights:
   friendly_name: Sofa Lights
   icon: mdi:lightbulb-multiple
-sensor.avglroomtemp:
-  icon: hass:thermometer
+#Delete not required 20210113
+#sensor.avglroomtemp:
+#  icon: hass:thermometer

@@ -125,123 +125,61 @@ cover:
         friendly_name: Kitchen
 
 switch:
-# Blind Control
-# Old blind configuration
+# Old blind command switch
 #  - platform: command_line
 #    switches:
 #      blind_bedroom_master:
+#        friendly_name: Blind Bedroom Master
 #        command_on: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006o;'' ) >/dev/ttyUSB0 <&1"'
 #        command_off: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006c;'' ) >/dev/ttyUSB0 <&1"'
-#        friendly_name: Blind Bedroom Master
+
+  - platform: template
+# https://www.home-assistant.io/integrations/switch.template#icon_template
+    switches:
+      front_door_shelly:
+        friendly_name: "kitchen Door"
+        value_template: "{{ is_state('switch.front_door', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: switch.front_door
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.front_door
+        icon_template: >
+          {% if is_state('binary_sensor.front_door_external_input', 'off') %}
+            mdi:door-open
+          {% elif is_state('switch.front_door', 'on') %}
+            mdi:door-closed
+          {% elif is_state('switch.front_door', 'off') %}
+            mdi:door-closed-lock
+          {% endif %}
 
   - platform: template
     switches:
-      # https://community.home-assistant.io/t/harmony-hub-activity/68392/9
-      # https://community.home-assistant.io/t/harmony-activities-volume-slider-and-lovelace/72419
-      # Sky TV Harmony Activity
-      har_watch_sky_tv:
-        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Sky TV') }}"
+      garage_roller_door_shelly:
+        friendly_name: "Garage Roller Door"
+        value_template: "{{ is_state('switch.garage_roller_door', 'on') }}"
         turn_on:
-          service: remote.turn_on
+          service: switch.turn_on
           data:
-            entity_id: remote.media_centre
-            activity: 'Watch Sky TV'
+            entity_id: switch.garage_roller_door
         turn_off:
-          service: remote.turn_on
+          service: switch.turn_off
           data:
-            entity_id: remote.media_centre
-            activity: 'PowerOff'
-      # XBOX Harmony Activity
-      har_play_xbox:
-        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Play Xbox') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'Play Xbox'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'PowerOff'
-      # Apple TV Harmony Activity
-      har_watch_apple_tv:
-        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Apple TV') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'Watch Apple TV'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'PowerOff'
-      # Freeview TV Harmony Activity
-      har_freeview_tv:
-        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Freeview TV') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'Freeview TV'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'PowerOff'
-      # Radio Harmony Activity
-      har_radio:
-        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Radio') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'Radio'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'PowerOff'
-      # Watch Netflix Harmony Activity
-      har_watch_netflix:
-        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Netflix') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'Watch Netflix'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'PowerOff'
-      # Computer Harmony Activity
-      har_computer:
-        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Computer') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'Computer'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'PowerOff'
-      # Computer Harmony Activity
-      har_vodafone_tv:
-        value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Vodafone TV') }}"
-        turn_on:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'Vodafone TV'
-        turn_off:
-          service: remote.turn_on
-          data:
-            entity_id: remote.media_centre
-            activity: 'PowerOff'
+            entity_id: switch.garage_roller_door
+        icon_template: >
+          {% if is_state('binary_sensor.garage_roller_door_external_input', 'off') %}
+            mdi:garage-open-variant
+          {% elif is_state('switch.garage_roller_door', 'on') %}
+            mdi:garage-variant
+          {% elif is_state('switch.garage_roller_door', 'off') %}
+            mdi:garage-variant-lock
+          {% endif %}
+
+# https://www.home-assistant.io/docs/configuration/splitting_configuration/
+switch templates: !include switch_template.yaml
 
 light:
   - platform: group
@@ -249,8 +187,9 @@ light:
     entities:
       - light.lounge_sofa_left
       - light.lounge_sofa_right
+      
   # Light Grouping
-light groups: !include light-groups.yaml
+light groups: !include light_groups.yaml
 
 # Switch to lights
 #  - platform: switch
@@ -268,6 +207,7 @@ input_select:
       - Just Left
       - Away
       - Extended Away
+
   suze:
     options:
       - Home
@@ -282,12 +222,10 @@ camera:
 # stream rtsp://xxx.xxx.xxx.xxx:XXXX/{UNIQUE_ID}
   - platform: generic
     name: "Garage UniFi Camera"
-    #username: !secret Protect_Device_User
-    #password: !secret Protect_Device_Password
-    #authentication: digest
     still_image_url: !secret garage_cam_image
     stream_source: !secret garage_cam_stream
     verify_ssl: false
+
 # Hikvission
 # stream rtsp://USER:PASSWORD@xxx.xxx.xxx.xxx:554/Streaming/Channels/101 
 # still http://xxx.xxx.xxx.xxx/ISAPI/Streaming/channels/101/picture
@@ -308,7 +246,8 @@ sensor:
     command: "cat /sys/class/thermal/thermal_zone0/temp"
     unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
-    scan_interval: 10
+    scan_interval: 30
+
 # https://www.home-assistant.io/integrations/systemmonitor/
   - platform: systemmonitor
     resources:
@@ -356,16 +295,6 @@ sensor:
     value_template: "{{ value_json.duration }}"
     icon: mdi:timer-sand-complete
 
-  # https://www.home-assistant.io/integrations/min_max
-  - platform: min_max
-    name: "avglroomtemp"
-    type: mean
-    round_digits: 1
-    entity_ids:
-      - sensor.motion_living_room_temperature
-      - sensor.motion_dining_d0170b01_temperature
-      - sensor.sensibo_temperature
-
 binary_sensor:
 # Motion sensor from Hikvission camera
 # https://www.home-assistant.io/integrations/hikvision/
@@ -389,8 +318,9 @@ template:
 # https://www.home-assistant.io/integrations/template/
 
   - binary_sensor:
-      - name: "Front Door UA"
+      - name: "Front Door"
         device_class: door
+        # create a enitity that changes icon state with device state, without defining icon
         # https://www.home-assistant.io/integrations/binary_sensor/#device-class
         state: >
           {% if is_state('binary_sensor.front_door_external_input', 'off') %}
@@ -413,19 +343,20 @@ template:
 # https://community.home-assistant.io/t/expose-sensibo-sensors/154984/5
 # Expose Humidity from sensibo Controller
   - sensor:
-      - name: "Sensibo Humidity"  
+      - name: "Living Room Humidity"
         state: "{{ state_attr('climate.lounge_heat_pump', 'current_humidity') }}"
+        device_class: humidity
         unit_of_measurement: '%'
-        icon: mdi:water-percent
+
 # Expose Temperature from Sensibo Contoller
   - sensor:
-      - name: "Sensibo Temperature"  
+      - name: "Sensibo Temperature"
+        device_class: temperature
         state: "{{ state_attr('climate.lounge_heat_pump', 'current_temperature') }}"
         unit_of_measurement: '°C'
-        icon: mdi:thermometer
 
 # Open Sprinkler status MQTT
-# Dealing with unknown status
+# Dealing with unknown status, whilst waiting for first run after HA start
 # https://www.home-assistant.io/integrations/template/#startup
 # ICON
 # https://www.home-assistant.io/integrations/template/#change-the-icon-when-a-state-changes
@@ -463,3 +394,22 @@ template:
             mdi:sprinkler
           {% endif %}
   
+  - sensor:
+    # Average multiple sensors into a single sensore, rather than using mean.
+    # https://www.home-assistant.io/integrations/template/#state-based-template-sensors
+    # https://www.home-assistant.io/integrations/min_max
+      - name: "Living Room Temperature"
+        device_class: temperature
+        unit_of_measurement: '°C'
+        state: >
+          {% set lr1 = states('sensor.motion_living_room_temperature') | float %}
+          {% set dr1 = states('sensor.motion_dining_d0170b01_temperature') | float %}
+          {% set sen1 = states('sensor.sensibo_temperature') | float %}
+          {{ ((lr1 + dr1 + sen1) / 3) | round(1, default=0) }}
+
+  - sensor:
+    # https://www.home-assistant.io/integrations/harmony#examples
+    - name: 'Media Centre'
+      state: >
+        {{ state_attr('remote.media_centre', 'current_activity') }}
+      icon: mdi:television-classic
