@@ -215,6 +215,16 @@ Shelly API Documentation https://shelly-api-docs.shelly.cloud/
 Shelly Gen 1 Firmware Change Log https://shelly-api-docs.shelly.cloud/gen1/#changelog
 
 Shelly Gen 2 Firmware Change Log https://shelly-api-docs.shelly.cloud/gen2/changelog
+
+Shelly firmware update URL generator http://archive.shelly-tools.de/ usefull for rollback firmware.
+
+http://192.3.4.5/ota?url=http://archive.shelly-tools.de/version/v1.11.8/SHDW-2.zip
+
+With user authentication:
+
+http://user_name:password@192.3.4.5/ota?url=http://archive.shelly-tools.de/version/v1.11.8/SHDW-2.zip
+
+
 ### Shellies Discovery
 Initially used https://github.com/bieniu/ha-shellies-discovery and MQTT which worked well, however I migrated to native Shelly Integration CoIoT
 

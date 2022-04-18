@@ -13,13 +13,12 @@ exclude:
 #   - binary_sensor.shelly_*_overpower_*
 #   - binary_sensor.shelly_*_overtemperature
    - binary_sensor.shelly_*_shortpush_*
+   - button.*_reboot
+   - button.*_update
    - device_tracker.*
-   - light.bedroom_*
-   - light.hallway_*
-   - light.hue_ambiance_downlight_*
-   - light.lounge_sofa_*
    - sensor.*_last_activity
    - sensor.aerosmith_*
+   - sensor.portishead_*
    - sensor.hue_dimmer_switch_*_battery_level
    - sensor.shelly_*_*_ip
    - sensor.shelly_*_ssid
@@ -30,14 +29,6 @@ exclude:
   entities:
    - automation.shellies_announce
    - automation.shellies_discovery
-   - light.bathroom_ambiance_ceiling
-   - light.bathroom_spot
-   - light.front_porch_switch
-   - light.garage_light_switch
-   - light.lounge_north_east
-   - light.lounge_north_west
-   - light.lounge_south_east
-   - light.toilet
    - sensor.bathroom_switch_battery_level
    - sensor.front_door_battery
    - sensor.front_door_volume
@@ -45,10 +36,11 @@ exclude:
    - sensor.north_side_volume
    - sensor.north_west_side_battery
    - sensor.north_west_side_volume
+   - device_tracker.portishead_*
 #  domains:
 #  - alert
 #  - automation
 #  - binary_sensor
-include:
-  entities:
-   - light.hallway_lights
+# include:
+#  entities:
+#   - light.hallway_lights

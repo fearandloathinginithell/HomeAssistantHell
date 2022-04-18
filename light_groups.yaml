@@ -1,49 +1,8 @@
-
-  - platform: group
-    name: Bathroom Lights
-    entities:
-      - light.bathroom_ambiance_ceiling
-      - light.bathroom_spot
-  - platform: group
-    name: Hallway Lights
-    entities:
-      - light.hallway_north
-      - light.hallway_south
-  - platform: group
-    name: Kitchen Lights
-    entities:
-      - light.hue_ambiance_downlight_1
-      - light.hue_ambiance_downlight_2
-      - light.hue_ambiance_downlight_3
-      - light.hue_ambiance_downlight_4
-      - light.hue_ambiance_downlight_5
-      - light.hue_ambiance_downlight_6
-  - platform: group
-    name: Master Bedroom Lights
-    entities:
-      - light.bedroom_master_a
-      - light.bedroom_master_b
-      - light.bedroom_master_c
-      - light.bedroom_master_d
-  - platform: group
-    name: Bedroom North East Lights
-    entities:
-      - light.bedroom_north_east_a
-      - light.bedroom_north_east_b
-      - light.bedroom_north_east_c
-      - light.bedroom_north_east_d
-  - platform: group
-    name: Bedroom South West Lights
-    entities:
-      - light.bedroom_south_west_a
-      - light.bedroom_south_west_b
-  - platform: group
-    name: Toilet Lights
-    entities:
-      - light.toilet
-  - platform: group
-    name: Living Room Lights
-    entities:
-      - light.lounge_south_east
-      - light.lounge_north_east
-      - light.dining_north_west
+#   - platform: group
+#     name: Living Room Sofa Lights
+#     entities:
+#       - light.lounge_sofa_left
+#       - light.lounge_sofa_right
+      
+  # Light Grouping
+# light groups: !include light_groups.yaml

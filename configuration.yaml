@@ -82,10 +82,10 @@ mqtt:
   discovery: true
   discovery_prefix: homeassistant
 
-climate:
+# climate:
 # Heat Pump
-  - platform: sensibo
-    api_key: !secret sensibo_api
+#  - platform: sensibo
+#    api_key: !secret sensibo_api
 
 cover:
   - platform: command_line
@@ -179,17 +179,15 @@ switch:
           {% endif %}
 
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
-switch templates: !include switch_template.yaml
+# switch templates: !include switch_template.yaml
 
 light:
   - platform: group
-    name: Living Room Sofa Lights
+    name: Living Room Lights
     entities:
-      - light.lounge_sofa_left
-      - light.lounge_sofa_right
-      
-  # Light Grouping
-light groups: !include light_groups.yaml
+      - light.lounge_south_east
+      - light.lounge_north_east
+      - light.dining_north_west
 
 # Switch to lights
 #  - platform: switch
