@@ -15,8 +15,6 @@
           data:
             entity_id: remote.media_centre
             activity: 'PowerOff'
-    
-
       # XBOX Harmony Activity
       har_play_xbox:
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Play Xbox') }}"

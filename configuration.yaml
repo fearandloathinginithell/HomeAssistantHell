@@ -42,6 +42,21 @@ panasonic_viera:
 # unifi protect
 stream:
 
+zha:
+# https://github.com/zigpy/zigpy
+# https://github.com/zigpy/zigpy/wiki/OTA-Device-Firmware-Updates
+# http://fw.ota.homesmart.ikea.net/feed/version_info.json
+# https://www.home-assistant.io/integrations/zha#ota-firmware-updates
+# https://github.com/dresden-elektronik/deconz-rest-plugin/wiki/OTA-Image-Types---Firmware-versions
+
+  zigpy_config:
+    ota:
+      otau_directory: /config/zigpy_ota
+      ikea_provider: false
+#      ikea_update_url: http://fw.test.ota.homesmart.ikea.net/feed/version_info.json
+      ledvance_provider: false
+      salus_provider: false
+
 # Need to come back to configuring this.
 alexa:
   smart_home:
@@ -75,12 +90,12 @@ python_script:
 #  exclude: [43, 44, 45, 47, 48, 51, 52, 54]
 #  lights: [50, 55]
 
-mqtt:
-  broker: !secret mqtt_broker
-  username: !secret mqtt_user
-  password: !secret mqtt_password
-  discovery: true
-  discovery_prefix: homeassistant
+#mqtt:
+#  broker: !secret mqtt_broker
+#  username: !secret mqtt_user
+#  password: !secret mqtt_password
+#  discovery: true
+#  discovery_prefix: homeassistant
 
 # climate:
 # Heat Pump
@@ -179,7 +194,7 @@ switch:
           {% endif %}
 
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
-# switch templates: !include switch_template.yaml
+switch templates: !include switch_template.yaml
 
 light:
   - platform: group
@@ -214,27 +229,27 @@ input_select:
       - Away
       - Extended Away
 
-camera:
+#camera:
 # Unifi protect
 # still https://xxx.xxx.xxx.xxx/snap.jpeg
 # stream rtsp://xxx.xxx.xxx.xxx:XXXX/{UNIQUE_ID}
-  - platform: generic
-    name: "Garage UniFi Camera"
-    still_image_url: !secret garage_cam_image
-    stream_source: !secret garage_cam_stream
-    verify_ssl: false
+#  - platform: generic
+#    name: "Garage UniFi Camera"
+#    still_image_url: !secret garage_cam_image
+#    stream_source: !secret garage_cam_stream
+#    verify_ssl: false
 
 # Hikvission
 # stream rtsp://USER:PASSWORD@xxx.xxx.xxx.xxx:554/Streaming/Channels/101 
 # still http://xxx.xxx.xxx.xxx/ISAPI/Streaming/channels/101/picture
-  - platform: generic
-    name: "Rear door"
-    username: !secret viewer
-    password: !secret viewerpass
-    authentication: digest
-    still_image_url: !secret Rear_door_cam_image
-    stream_source: !secret Rear_door_cam_stream
-    verify_ssl: false
+#  - platform: generic
+#    name: "Rear door"
+#    username: !secret viewer
+#    password: !secret viewerpass
+#    authentication: digest
+#    still_image_url: !secret Rear_door_cam_image
+#    stream_source: !secret Rear_door_cam_stream
+#    verify_ssl: false
 #    #
 
 sensor:
@@ -362,11 +377,11 @@ template:
       - name: "Watering Pot Plants"
         state: >
           {% if is_state('sensor.opensprinkler_station_0', '1') %}
-            watering
+            Watering
           {% elif is_state('sensor.opensprinkler_station_0', '0') %}
-            idle
+            Idle
           {% else %}
-            standby
+            Status Standby
           {% endif %}
         icon: >
           {% if is_state("sensor.watering_pot_plants", "watering") %}
@@ -374,16 +389,16 @@ template:
           {% else %}
             mdi:sprinkler
           {% endif %}
-
+          
   - sensor:
       - name: "Watering Front Garden"
         state: >
           {% if is_state('sensor.opensprinkler_station_1', '1') %}
-            watering
+            Watering
           {% elif is_state('sensor.opensprinkler_station_1', '0') %}
-            idle
+            Idle
           {% else %}
-            standby
+            Status Standby
           {% endif %}
         icon: >
           {% if is_state("sensor.watering_front_garden", "watering") %}
@@ -391,7 +406,26 @@ template:
           {% else %}
             mdi:sprinkler
           {% endif %}
-  
+
+  - sensor:
+      - name: "Dryer"
+        state: >
+          {% if is_state('binary_sensor.clothes_dryer_accelerometer', 'on') %}
+            Dryer On
+          {% elif is_state('binary_sensor.clothes_dryer_accelerometer', 'off') %}
+            Dryer Off
+          {% else %}
+            Status standby
+          {% endif %}
+        icon: >
+          {% if is_state('binary_sensor.clothes_dryer_accelerometer', 'on') %}
+            mdi:tumble-dryer
+          {% elif is_state('binary_sensor.clothes_dryer_accelerometer', 'off') %}
+            mdi:tumble-dryer-off
+          {% else %}
+            mdi:tumble-dryer-alert
+          {% endif %}
+
   - sensor:
     # Average multiple sensors into a single sensore, rather than using mean.
     # https://www.home-assistant.io/integrations/template/#state-based-template-sensors

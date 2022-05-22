@@ -6,7 +6,7 @@ db_url: !secret mariadb_url
 #db_url mysql://USER:PASSWORD@xxx.xxx.xxx.xxx:XXXX/DB_NAME?charset=utf8
 purge_keep_days: 7
 exclude:
-  entity_globs:
+   entity_globs:
    - binary_sensor.shelly_*_firmware_update
    - binary_sensor.shelly_*_input_*
    - binary_sensor.shelly_*_longpush_*
@@ -16,6 +16,7 @@ exclude:
    - button.*_reboot
    - button.*_update
    - device_tracker.*
+   - device_tracker.portishead_*
    - sensor.*_last_activity
    - sensor.aerosmith_*
    - sensor.portishead_*
@@ -25,8 +26,9 @@ exclude:
 #   - sensor.shelly_*_temperature
    - sensor.shelly_*_uptime
    - switch.har_*
+   - switch.media_centre_*
    - switch.shelly_*_relay_*
-  entities:
+   entities:
    - automation.shellies_announce
    - automation.shellies_discovery
    - sensor.bathroom_switch_battery_level
@@ -36,7 +38,6 @@ exclude:
    - sensor.north_side_volume
    - sensor.north_west_side_battery
    - sensor.north_west_side_volume
-   - device_tracker.portishead_*
 #  domains:
 #  - alert
 #  - automation
