@@ -19,9 +19,6 @@ homeassistant:
   
 recorder: !include recorder.yaml
 
-# NGINX Home Assistant SSL proxy
-# trusted_proxies: # Example
-#   - 172.40.44.0/24 # Example
 http:
   use_x_forwarded_for: true
   trusted_proxies:
@@ -43,12 +40,6 @@ panasonic_viera:
 stream:
 
 zha:
-# https://github.com/zigpy/zigpy
-# https://github.com/zigpy/zigpy/wiki/OTA-Device-Firmware-Updates
-# http://fw.ota.homesmart.ikea.net/feed/version_info.json
-# https://www.home-assistant.io/integrations/zha#ota-firmware-updates
-# https://github.com/dresden-elektronik/deconz-rest-plugin/wiki/OTA-Image-Types---Firmware-versions
-
   zigpy_config:
     ota:
       otau_directory: /config/zigpy_ota
@@ -84,23 +75,6 @@ scene: !include scenes.yaml
 
 # used by Shellies discovery (MQTT)
 python_script:
-
-# vera:
-#  vera_controller_url: !secret  vera_url
-#  exclude: [43, 44, 45, 47, 48, 51, 52, 54]
-#  lights: [50, 55]
-
-#mqtt:
-#  broker: !secret mqtt_broker
-#  username: !secret mqtt_user
-#  password: !secret mqtt_password
-#  discovery: true
-#  discovery_prefix: homeassistant
-
-# climate:
-# Heat Pump
-#  - platform: sensibo
-#    api_key: !secret sensibo_api
 
 cover:
   - platform: command_line
@@ -140,14 +114,6 @@ cover:
         friendly_name: Kitchen
 
 switch:
-# Old blind command switch
-#  - platform: command_line
-#    switches:
-#      blind_bedroom_master:
-#        friendly_name: Blind Bedroom Master
-#        command_on: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006o;'' ) >/dev/ttyUSB0 <&1"'
-#        command_off: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006c;'' ) >/dev/ttyUSB0 <&1"'
-
   - platform: template
 # https://www.home-assistant.io/integrations/switch.template#icon_template
     switches:
@@ -229,29 +195,6 @@ input_select:
       - Away
       - Extended Away
 
-#camera:
-# Unifi protect
-# still https://xxx.xxx.xxx.xxx/snap.jpeg
-# stream rtsp://xxx.xxx.xxx.xxx:XXXX/{UNIQUE_ID}
-#  - platform: generic
-#    name: "Garage UniFi Camera"
-#    still_image_url: !secret garage_cam_image
-#    stream_source: !secret garage_cam_stream
-#    verify_ssl: false
-
-# Hikvission
-# stream rtsp://USER:PASSWORD@xxx.xxx.xxx.xxx:554/Streaming/Channels/101 
-# still http://xxx.xxx.xxx.xxx/ISAPI/Streaming/channels/101/picture
-#  - platform: generic
-#    name: "Rear door"
-#    username: !secret viewer
-#    password: !secret viewerpass
-#    authentication: digest
-#    still_image_url: !secret Rear_door_cam_image
-#    stream_source: !secret Rear_door_cam_stream
-#    verify_ssl: false
-#    #
-
 sensor:
 # Raspberry Pi, Odroid CPU Temp
   - platform: command_line
@@ -280,7 +223,6 @@ sensor:
       suze:
         friendly_name: suze
         value_template: "{{ states('input_select.suze') }}"
-
 
   # Open sprinker
   # https://www.home-assistant.io/integrations/sensor.mqtt/
@@ -329,7 +271,6 @@ binary_sensor:
   
 template:
 # https://www.home-assistant.io/integrations/template/
-
   - binary_sensor:
       - name: "Front Door"
         device_class: door
@@ -342,7 +283,6 @@ template:
             off
           {% endif %}
         # https://www.home-assistant.io/integrations/template/#multiline-example-with-an-if-test
-
   - binary_sensor:
       - name: "Garage Door"
         device_class: garage_door
@@ -352,13 +292,12 @@ template:
           {% elif is_state('binary_sensor.garage_roller_door_external_input', 'on') %}
             off
           {% endif %}
-
 # https://community.home-assistant.io/t/expose-sensibo-sensors/154984/5
 # Expose Humidity from sensibo Controller
   - sensor:
       - name: "Living Room Humidity"
-        state: "{{ state_attr('climate.lounge_heat_pump', 'current_humidity') }}"
         device_class: humidity
+        state: "{{ state_attr('climate.lounge_heat_pump', 'current_humidity') }}"
         unit_of_measurement: '%'
 
 # Expose Temperature from Sensibo Contoller
@@ -384,7 +323,7 @@ template:
             Status Standby
           {% endif %}
         icon: >
-          {% if is_state("sensor.watering_pot_plants", "watering") %}
+          {% if is_state('sensor.opensprinkler_station_0', '1') %}
             mdi:sprinkler-variant
           {% else %}
             mdi:sprinkler
@@ -399,9 +338,9 @@ template:
             Idle
           {% else %}
             Status Standby
-          {% endif %}
+          {% endif %} 
         icon: >
-          {% if is_state("sensor.watering_front_garden", "watering") %}
+          {% if is_state('sensor.opensprinkler_station_1', '1') %}
             mdi:sprinkler-variant
           {% else %}
             mdi:sprinkler

@@ -236,3 +236,10 @@ Be sure to configure Home Assistant IP address and port don't use Multicast
 ## ZHA
 
 ConBee II Firmware Change Log https://github.com/dresden-elektronik/deconz-rest-plugin/wiki/Firmware-Changelog
+
+https://github.com/zigpy/zigpy
+https://github.com/zigpy/zigpy/wiki/OTA-Device-Firmware-Updates
+http://fw.ota.homesmart.ikea.net/feed/version_info.json
+https://www.home-assistant.io/integrations/zha#ota-firmware-updates
+https://github.com/dresden-elektronik/deconz-rest-plugin/wiki/OTA-Image-Types---Firmware-versions
+https://ww8.ikea.com/ikeahomesmart/releasenotes/releasenotes.html
