@@ -16,7 +16,25 @@ homeassistant:
   customize_glob: !include customize_glob.yaml
   auth_mfa_modules:
     - type: totp
-  
+
+# Example configuration.yaml entry
+# https://community.home-assistant.io/t/touchpad-for-manual-alarm-control-panel-supports-multiple-user-codes/357688
+alarm_control_panel:
+  - platform: manual
+    name: Intrusion alarm
+    code: !secret disarm_code
+    code_arm_required: false
+    # trigger_time: 0
+    armed_away:
+      delay_time: 0
+      arming_time: 10
+    armed_home:
+      delay_time: 20
+      arming_time: 10
+    armed_night:
+      delay_time: 0
+      arming_time: 0
+
 recorder: !include recorder.yaml
 
 http:
@@ -67,14 +85,12 @@ alexa:
 tts:
   - platform: google_translate
 
-# group: !include groups.yaml # migrated to light-groups.yaml
+group: !include groups.yaml 
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
-automation: !include automations.yaml
-script: !include scripts.yaml
+automation: !include_dir_merge_list automation/
+# script: !include_dir_list scripts/
+script: !include_dir_merge_named scripts/
 scene: !include scenes.yaml
-
-# used by Shellies discovery (MQTT)
-python_script:
 
 cover:
   - platform: command_line
@@ -194,6 +210,17 @@ input_select:
       - Just Left
       - Away
       - Extended Away
+      
+input_text:
+    touchpad_code:
+      name: Touchpad code
+      #mode: password
+      pattern: "[0-9]*"
+      min: 0
+      max: 4
+# https://community.home-assistant.io/t/notification-to-state-which-sensor-triggered-manual-alarm/146071/7
+    trigger_source:
+      name: Trigger Source
 
 sensor:
 # Raspberry Pi, Odroid CPU Temp
@@ -223,32 +250,6 @@ sensor:
       suze:
         friendly_name: suze
         value_template: "{{ states('input_select.suze') }}"
-
-  # Open sprinker
-  # https://www.home-assistant.io/integrations/sensor.mqtt/
-  - platform: mqtt
-    name: "OpenSprinkler Station 0"
-    # "Pot Plants"
-    state_topic: "opensprinkler/station/0"
-    value_template: "{{ value_json.state }}"
-
-  - platform: mqtt
-    name: "OpenSprinkler Station 1"
-    # "Front Garden"
-    state_topic: "opensprinkler/station/1"
-    value_template: "{{ value_json.state }}"
-  
-  - platform: mqtt
-    name: "OpenSprinkler Station 0 Last Watering Time"
-    state_topic: "opensprinkler/station/0"
-    value_template: "{{ value_json.duration }}"
-    icon: mdi:timer-sand-complete
-  
-  - platform: mqtt
-    name: "OpenSprinkler Station 1 Last Watering Time"
-    state_topic: "opensprinkler/station/1"
-    value_template: "{{ value_json.duration }}"
-    icon: mdi:timer-sand-complete
 
 binary_sensor:
 # Motion sensor from Hikvission camera
@@ -384,3 +385,50 @@ template:
       state: >
         {{ state_attr('remote.media_centre', 'current_activity') }}
       icon: mdi:television-classic
+
+  - sensor:
+      - name: "Disarm user codes"
+        state: Mapped in attributes
+        attributes: !secret disarm_user_codes
+
+      - name: "Touchpad display"
+        unique_id: touchpad_display
+        state: >-
+          {% if is_state('input_text.touchpad_code', '') %}
+              {% set mode =
+                states('alarm_control_panel.intrusion_alarm') %}
+              {{ {
+                  'disarmed': 'READY TO ARM',
+                  'armed_home': 'ARMED FOR HOME',
+                  'armed_away': "ARMED FOR AWAY",
+                  'armed_night': 'ARMED FOR NIGHT',
+                  'armed_vacation': 'ARMED FOR VACATION',
+                  'triggered': 'INTRUSION ALARM',
+                  'pending': 'PENDING ALARM',
+                  'arming': 'ARMING ALARM'
+                } [mode] }}
+          {% else %}
+            {{ '****'[:(states('input_text.touchpad_code')
+              | length)] }}
+          {% endif %}
+
+mqtt:
+  sensor:
+  # Open sprinker
+  # https://www.home-assistant.io/integrations/sensor.mqtt/
+    - name: "OpenSprinkler Station 0"
+      # "Pot Plants"
+      state_topic: "opensprinkler/station/0"
+      value_template: "{{ value_json.state }}"
+    - name: "OpenSprinkler Station 1"
+      # "Front Garden"
+      state_topic: "opensprinkler/station/1"
+      value_template: "{{ value_json.state }}"
+    - name: "OpenSprinkler Station 0 Last Watering Time"
+      state_topic: "opensprinkler/station/0"
+      value_template: "{{ value_json.duration }}"
+      icon: mdi:timer-sand-complete
+    - name: "OpenSprinkler Station 1 Last Watering Time"
+      state_topic: "opensprinkler/station/1"
+      value_template: "{{ value_json.duration }}"
+      icon: mdi:timer-sand-complete

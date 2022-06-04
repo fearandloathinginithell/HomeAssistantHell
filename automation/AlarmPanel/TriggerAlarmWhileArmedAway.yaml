@@ -1,0 +1,36 @@
+- alias: 'Trigger alarm while armed away'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.motion_kitchen_ias_zone
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.motion_living_room_ias_zone
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.motion_dining_d0170b01_ias_zone
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.motion_hallway_e4320b01_ias_zone
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.master_bedroom_window_state
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.kitchen_window
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.garage_roller_door_external_input
+      to: "on"
+  condition:
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: armed_away
+  action:
+    - service: input_text.set_value
+      data_template:
+        entity_id: input_text.trigger_source
+        value: "{{ trigger.to_state.attributes.friendly_name }}"
+    - service: alarm_control_panel.alarm_trigger
+      entity_id: alarm_control_panel.intrusion_alarm
+# https://community.home-assistant.io/t/notification-to-state-which-sensor-triggered-manual-alarm/146071/7
+

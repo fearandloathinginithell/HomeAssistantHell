@@ -1,0 +1,11 @@
+- alias: "Arm alarm when everyone Left"
+  trigger:
+    - platform: state
+      entity_id: group.any_alarm_users_home
+      to: "not_home"
+  action:
+    - service: alarm_control_panel.alarm_arm_away
+      target:
+        entity_id: alarm_control_panel.intrusion_alarm
+#      data: 
+#          code: xxxx

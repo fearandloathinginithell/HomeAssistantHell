@@ -9,12 +9,19 @@
 !Assets/README/*
 !Assets/README/DD7002B_Docs/*
 !Assets/README/EZsync010_Docs/*
+!automation
+!automation/*
+!automation/AlarmPanel/*
+!automation/Shellies/*
 !esphome
 !esphome/*
 !node-red
 !node-red/flows.json
 !python_scripts
 !python_scripts/shellies_discovery.py
+!scripts
+!scripts/*
+!scripts/AlarmPanel/*
 # Explit Exclude.
 ip_bans.yaml
 secrets.yaml

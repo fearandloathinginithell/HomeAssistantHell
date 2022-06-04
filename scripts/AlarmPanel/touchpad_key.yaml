@@ -1,0 +1,39 @@
+touchpad_key:
+  alias: Touchpad key
+  sequence:
+  - choose:
+    - alias: asterix is backspace
+      conditions:
+      - condition: template
+        value_template: >
+          {{ key == '*' }}
+      sequence:
+      - service: input_text.set_value
+        target:
+          entity_id: input_text.touchpad_code
+        data:
+          value: >
+            {{ states('input_text.touchpad_code')[:-1] }}
+    default:
+    - service: input_text.set_value
+      target:
+        entity_id: input_text.touchpad_code
+      data:
+        value: >
+          {{ states('input_text.touchpad_code')[-3:] }}{{ key }}
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 3
+      milliseconds: 0
+  - service: input_text.set_value
+    target:
+      entity_id: input_text.touchpad_code
+    data:
+      value: ''
+  mode: restart
+  fields:
+    key:
+      description: key character
+      example: '1'
+  icon: mdi:form-textbox-password

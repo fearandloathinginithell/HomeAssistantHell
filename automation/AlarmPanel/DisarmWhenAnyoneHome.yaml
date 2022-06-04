@@ -1,0 +1,11 @@
+- alias: "Disarm alarm when anyone Home"
+  trigger:
+    - platform: state
+      entity_id: group.any_alarm_users_home
+      to: "home"
+  action:
+    - service: alarm_control_panel.alarm_disarm
+      target:
+        entity_id: alarm_control_panel.intrusion_alarm
+      data: 
+          code: !secret disarm_code

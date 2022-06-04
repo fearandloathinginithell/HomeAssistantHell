@@ -1,0 +1,33 @@
+  alarm_edge_sensors:
+    name: "Alarm Edge Sensors"
+    all: false
+    entities:
+      - binary_sensor.master_bedroom_window_state
+      - binary_sensor.kitchen_window
+      
+  alarm_internal_sensors:
+    name: "Alarm Internal Sensors"
+    all: false
+    entities:
+      - binary_sensor.motion_kitchen_ias_zone
+      - binary_sensor.motion_living_room_ias_zone
+      - binary_sensor.motion_dining_d0170b01_ias_zone
+      - binary_sensor.motion_hallway_e4320b01_ias_zone
+
+  any_alarm_users_home:
+    # Will report 'Home' if any user Home, away if all users Away
+    name: "Any Alarm Users Home"
+    all: false
+    icon: mdi:account-outline
+    entities:
+      - person.matt
+      - person.suze
+
+  all_alarm_users_home:
+    # Will report 'Away' if any user away, Home if all users Home
+    name: "all Alarm Users Home"
+    all: true
+    icon: mdi:account
+    entities:
+      - person.matt
+      - person.suze

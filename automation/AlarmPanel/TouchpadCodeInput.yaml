@@ -1,0 +1,29 @@
+# https://community.home-assistant.io/t/touchpad-for-manual-alarm-control-panel-supports-multiple-user-codes/357688
+- alias: 'Touchpad code input'
+  description: ''
+  trigger:
+    - platform: state
+      entity_id: input_text.touchpad_code
+  condition:
+    - condition: template
+      value_template: >
+        {{ state_attr('sensor.disarm_user_codes',
+        states('input_text.touchpad_code')) is not none }}
+  action:
+    - service: script.turn_on
+      target:
+        entity_id: script.arm_disarmed
+      data:
+        variables:
+          user: >
+            {{ state_attr('sensor.disarm_user_codes',
+            states('input_text.touchpad_code')) }}
+    - service: input_text.set_value
+      target:
+        entity_id: input_text.touchpad_code
+      data:
+            value: ''
+    - service: script.turn_off
+      target:
+        entity_id: script.touchpad_key
+  mode: single

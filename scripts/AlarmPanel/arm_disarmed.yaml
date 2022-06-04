@@ -1,0 +1,20 @@
+arm_disarmed:
+  alias: Arm disarmed
+  sequence:
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: disarmed
+  - service: alarm_control_panel.alarm_disarm
+    target:
+      entity_id: alarm_control_panel.intrusion_alarm
+  - service: notify.notify
+    data:
+      message: '{{ user }} disarmed security'
+  mode: single
+  fields:
+    user:
+      description: User or activity disarming security
+      example: guest
+  icon: mdi:security

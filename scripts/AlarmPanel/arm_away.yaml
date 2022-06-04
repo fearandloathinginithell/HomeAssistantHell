@@ -1,0 +1,22 @@
+arm_away:
+  alias: Arm away
+  sequence:
+  # only set away from unalarmed state, and
+  # don't downgrade mode to home or night
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: triggered
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: pending
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: armed_away
+  - service: alarm_control_panel.alarm_arm_away
+    target:
+      entity_id: alarm_control_panel.intrusion_alarm
+  mode: single
+  icon: mdi:security
+# https://blog.cavelab.dev/2021/11/home-assistant-manual-alarm/

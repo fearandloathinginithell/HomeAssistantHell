@@ -1,0 +1,24 @@
+arm_home:
+  alias: Arm home
+  sequence:
+  # only set home from disarmed unalarmed state, but
+  # don't allow arming downgrade from away
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: triggered
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: pending
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: armed_away
+    - condition: state
+      entity_id: alarm_control_panel.intrusion_alarm
+      state: armed_home
+  - service: alarm_control_panel.alarm_arm_home
+    target:
+      entity_id: alarm_control_panel.intrusion_alarm
+  mode: single
+  icon: mdi:security

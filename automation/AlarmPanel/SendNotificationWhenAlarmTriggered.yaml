@@ -1,0 +1,13 @@
+  - alias: 'Send notification when alarm triggered'
+    trigger:
+      - platform: state
+        entity_id: alarm_control_panel.intrusion_alarm
+        to: "triggered"
+    action:
+      - service: notify.notify
+        data_template:
+          title: "ALARM!"
+          message: "The alarm has been triggered by the {{ states('input_text.trigger_source') }} at {{now().strftime('%H:%M %d-%m-%Y')}}." 
+
+# https://community.home-assistant.io/t/how-to-display-the-sensor-that-triggers-the-alarm/338551
+# https://community.home-assistant.io/t/notification-to-state-which-sensor-triggered-manual-alarm/146071/7
