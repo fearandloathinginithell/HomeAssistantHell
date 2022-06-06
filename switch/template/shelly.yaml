@@ -1,0 +1,44 @@
+  - platform: template
+# https://www.home-assistant.io/integrations/switch.template#icon_template
+    switches:
+      front_door_shelly:
+        friendly_name: "kitchen Door"
+        value_template: "{{ is_state('switch.front_door', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: switch.front_door
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.front_door
+        icon_template: >
+          {% if is_state('binary_sensor.front_door_external_input', 'off') %}
+            mdi:door-open
+          {% elif is_state('switch.front_door', 'on') %}
+            mdi:door-closed
+          {% elif is_state('switch.front_door', 'off') %}
+            mdi:door-closed-lock
+          {% endif %}
+
+  - platform: template
+    switches:
+      garage_roller_door_shelly:
+        friendly_name: "Garage Roller Door"
+        value_template: "{{ is_state('switch.garage_roller_door', 'on') }}"
+        turn_on:
+          service: switch.turn_on
+          data:
+            entity_id: switch.garage_roller_door
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.garage_roller_door
+        icon_template: >
+          {% if is_state('binary_sensor.garage_roller_door_external_input', 'off') %}
+            mdi:garage-open-variant
+          {% elif is_state('switch.garage_roller_door', 'on') %}
+            mdi:garage-variant
+          {% elif is_state('switch.garage_roller_door', 'off') %}
+            mdi:garage-variant-lock
+          {% endif %}

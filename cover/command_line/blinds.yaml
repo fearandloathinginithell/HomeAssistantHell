@@ -1,0 +1,35 @@
+  - platform: command_line
+  # https://www.home-assistant.io/integrations/cover.command_line/
+  # One way blinds
+    covers:
+      blind_lounge_se:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Lounge South East
+      blind_bedroom_master:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Bedroom Master
+      blind_lounge_ne:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Lounge North  East
+      blind_dining_n:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Dining North
+      blind_dining_nw:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Dining North West
+  # Bi-directional blinds
+      blind_kitchen:
+        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003o;'' ) >/dev/ttyUSB0 <&1"'
+        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003c;'' ) >/dev/ttyUSB0 <&1"'
+        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003s;'' ) >/dev/ttyUSB0 <&1"'
+        friendly_name: Kitchen

@@ -1,0 +1,38 @@
+# Open Sprinkler status MQTT
+# Dealing with unknown status, whilst waiting for first run after HA start
+# https://www.home-assistant.io/integrations/template/#startup
+# ICON
+# https://www.home-assistant.io/integrations/template/#change-the-icon-when-a-state-changes
+  - sensor:
+    - name: "Watering Pot Plants"
+      state: >
+          {% if is_state('sensor.opensprinkler_station_0', '1') %}
+            Watering
+          {% elif is_state('sensor.opensprinkler_station_0', '0') %}
+            Idle
+          {% else %}
+            Status Standby
+          {% endif %}
+      icon: >
+          {% if is_state('sensor.opensprinkler_station_0', '1') %}
+            mdi:sprinkler-variant
+          {% else %}
+            mdi:sprinkler
+          {% endif %}
+          
+  - sensor:
+    - name: "Watering Front Garden"
+      state: >
+          {% if is_state('sensor.opensprinkler_station_1', '1') %}
+            Watering
+          {% elif is_state('sensor.opensprinkler_station_1', '0') %}
+            Idle
+          {% else %}
+            Status Standby
+          {% endif %} 
+      icon: >
+          {% if is_state('sensor.opensprinkler_station_1', '1') %}
+            mdi:sprinkler-variant
+          {% else %}
+            mdi:sprinkler
+          {% endif %}

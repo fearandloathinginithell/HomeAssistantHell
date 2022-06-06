@@ -2,7 +2,7 @@
 default_config:
 
 homeassistant:
-  name: "Château de Westra"
+  name: "Château de Pōneke"
   latitude: !secret latitude
   longitude: !secret longitude
   elevation: !secret elevation
@@ -17,7 +17,28 @@ homeassistant:
   auth_mfa_modules:
     - type: totp
 
-# Example configuration.yaml entry
+wake_on_lan:
+# unifi protect
+stream:
+
+# https://www.home-assistant.io/docs/configuration/splitting_configuration/
+automation: !include_dir_merge_list automation/
+cover: !include_dir_merge_list cover/
+group: !include groups.yaml
+input_select: !include input_select/people.yaml
+recorder: !include recorder.yaml
+scene: !include scenes.yaml
+script: !include_dir_merge_named scripts/
+sensor: !include_dir_merge_list sensor/
+switch: !include_dir_merge_list switch/
+template: !include_dir_merge_list template/
+
+mqtt:
+  sensor: !include_dir_merge_list mqtt/sensor/
+# Text to speech
+tts:
+  - platform: google_translate
+
 # https://community.home-assistant.io/t/touchpad-for-manual-alarm-control-panel-supports-multiple-user-codes/357688
 alarm_control_panel:
   - platform: manual
@@ -35,16 +56,12 @@ alarm_control_panel:
       delay_time: 0
       arming_time: 0
 
-recorder: !include recorder.yaml
-
 http:
   use_x_forwarded_for: true
   trusted_proxies:
     - !secret trusted_proxies
   ip_ban_enabled: true
   login_attempts_threshold: 5
-
-wake_on_lan:
 
 panasonic_viera:
   host: !secret TVIP
@@ -53,9 +70,6 @@ panasonic_viera:
     - service: wake_on_lan.send_magic_packet
       data:
         mac: !secret TVMAC
-
-# unifi protect
-stream:
 
 zha:
   zigpy_config:
@@ -81,136 +95,12 @@ alexa:
       switch.shelly_1_e09806967ca8_relay_0:
         display_categories: CONTACT_SENSOR
 
-# Text to speech
-tts:
-  - platform: google_translate
-
-group: !include groups.yaml 
-# https://www.home-assistant.io/docs/configuration/splitting_configuration/
-automation: !include_dir_merge_list automation/
-# script: !include_dir_list scripts/
-script: !include_dir_merge_named scripts/
-scene: !include scenes.yaml
-
-cover:
-  - platform: command_line
-  # https://www.home-assistant.io/integrations/cover.command_line/
-  # One way blinds
-    covers:
-      blind_lounge_se:
-        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005o;'' ) >/dev/ttyUSB0 <&1"'
-        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005c;'' ) >/dev/ttyUSB0 <&1"'
-        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D005s;'' ) >/dev/ttyUSB0 <&1"'
-        friendly_name: Lounge South East
-      blind_bedroom_master:
-        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006o;'' ) >/dev/ttyUSB0 <&1"'
-        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006c;'' ) >/dev/ttyUSB0 <&1"'
-        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D006s;'' ) >/dev/ttyUSB0 <&1"'
-        friendly_name: Bedroom Master
-      blind_lounge_ne:
-        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004o;'' ) >/dev/ttyUSB0 <&1"'
-        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004c;'' ) >/dev/ttyUSB0 <&1"'
-        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D004s;'' ) >/dev/ttyUSB0 <&1"'
-        friendly_name: Lounge North  East
-      blind_dining_n:
-        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002o;'' ) >/dev/ttyUSB0 <&1"'
-        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002c;'' ) >/dev/ttyUSB0 <&1"'
-        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D002s;'' ) >/dev/ttyUSB0 <&1"'
-        friendly_name: Dining North
-      blind_dining_nw:
-        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001o;'' ) >/dev/ttyUSB0 <&1"'
-        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001c;'' ) >/dev/ttyUSB0 <&1"'
-        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D001s;'' ) >/dev/ttyUSB0 <&1"'
-        friendly_name: Dining North West
-  # Bi-directional blinds
-      blind_kitchen:
-        command_open: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003o;'' ) >/dev/ttyUSB0 <&1"'
-        command_close: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003c;'' ) >/dev/ttyUSB0 <&1"'
-        command_stop: '/bin/bash -c "( stty raw speed 9600 >&2; echo -ne ''!123D003s;'' ) >/dev/ttyUSB0 <&1"'
-        friendly_name: Kitchen
-
-switch:
-  - platform: template
-# https://www.home-assistant.io/integrations/switch.template#icon_template
-    switches:
-      front_door_shelly:
-        friendly_name: "kitchen Door"
-        value_template: "{{ is_state('switch.front_door', 'on') }}"
-        turn_on:
-          service: switch.turn_on
-          data:
-            entity_id: switch.front_door
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: switch.front_door
-        icon_template: >
-          {% if is_state('binary_sensor.front_door_external_input', 'off') %}
-            mdi:door-open
-          {% elif is_state('switch.front_door', 'on') %}
-            mdi:door-closed
-          {% elif is_state('switch.front_door', 'off') %}
-            mdi:door-closed-lock
-          {% endif %}
-
-  - platform: template
-    switches:
-      garage_roller_door_shelly:
-        friendly_name: "Garage Roller Door"
-        value_template: "{{ is_state('switch.garage_roller_door', 'on') }}"
-        turn_on:
-          service: switch.turn_on
-          data:
-            entity_id: switch.garage_roller_door
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: switch.garage_roller_door
-        icon_template: >
-          {% if is_state('binary_sensor.garage_roller_door_external_input', 'off') %}
-            mdi:garage-open-variant
-          {% elif is_state('switch.garage_roller_door', 'on') %}
-            mdi:garage-variant
-          {% elif is_state('switch.garage_roller_door', 'off') %}
-            mdi:garage-variant-lock
-          {% endif %}
-
-# https://www.home-assistant.io/docs/configuration/splitting_configuration/
-switch templates: !include switch_template.yaml
-
-light:
-  - platform: group
-    name: Living Room Lights
-    entities:
-      - light.lounge_south_east
-      - light.lounge_north_east
-      - light.dining_north_west
-
 # Switch to lights
+# light:
 #  - platform: switch
 #    name: Bedside Light Right-Hand Switch
 #    entity_id: switch.shelly_1pm_40f52001c859_relay_0
-    
-
-input_select:
-# Device Trackers
-# https://bonani.tech/making-home-assistants-presence-detection-not-so-binary-node-red-version/
-  matt:
-    options:
-      - Home
-      - Just Arrived
-      - Just Left
-      - Away
-      - Extended Away
-
-  suze:
-    options:
-      - Home
-      - Just Arrived
-      - Just Left
-      - Away
-      - Extended Away
-      
+          
 input_text:
     touchpad_code:
       name: Touchpad code
@@ -221,35 +111,6 @@ input_text:
 # https://community.home-assistant.io/t/notification-to-state-which-sensor-triggered-manual-alarm/146071/7
     trigger_source:
       name: Trigger Source
-
-sensor:
-# Raspberry Pi, Odroid CPU Temp
-  - platform: command_line
-    name: CPU Temperature
-    command: "cat /sys/class/thermal/thermal_zone0/temp"
-    unit_of_measurement: "°C"
-    value_template: '{{ value | multiply(0.001) | round(1) }}'
-    scan_interval: 30
-
-# https://www.home-assistant.io/integrations/systemmonitor/
-  - platform: systemmonitor
-    resources:
-      - type: memory_use_percent
-      - type: swap_use_percent
-      - type: processor_use
-      - type: processor_temperature
-      - type: last_boot
-
-# Device Trackers
-# https://bonani.tech/making-home-assistants-presence-detection-not-so-binary-node-red-version/
-  - platform: template
-    sensors:
-      matt:
-        friendly_name: matt
-        value_template: "{{ states('input_select.matt') }}"
-      suze:
-        friendly_name: suze
-        value_template: "{{ states('input_select.suze') }}"
 
 binary_sensor:
 # Motion sensor from Hikvission camera
@@ -269,166 +130,3 @@ binary_sensor:
         ignored: true
       disk_full:
         ignored: true
-  
-template:
-# https://www.home-assistant.io/integrations/template/
-  - binary_sensor:
-      - name: "Front Door"
-        device_class: door
-        # create a enitity that changes icon state with device state, without defining icon
-        # https://www.home-assistant.io/integrations/binary_sensor/#device-class
-        state: >
-          {% if is_state('binary_sensor.front_door_external_input', 'off') %}
-            on
-          {% elif is_state('binary_sensor.front_door_external_input', 'on') %}
-            off
-          {% endif %}
-        # https://www.home-assistant.io/integrations/template/#multiline-example-with-an-if-test
-  - binary_sensor:
-      - name: "Garage Door"
-        device_class: garage_door
-        state: >
-          {% if is_state('binary_sensor.garage_roller_door_external_input', 'off') %}
-            on
-          {% elif is_state('binary_sensor.garage_roller_door_external_input', 'on') %}
-            off
-          {% endif %}
-# https://community.home-assistant.io/t/expose-sensibo-sensors/154984/5
-# Expose Humidity from sensibo Controller
-  - sensor:
-      - name: "Living Room Humidity"
-        device_class: humidity
-        state: "{{ state_attr('climate.lounge_heat_pump', 'current_humidity') }}"
-        unit_of_measurement: '%'
-
-# Expose Temperature from Sensibo Contoller
-  - sensor:
-      - name: "Sensibo Temperature"
-        device_class: temperature
-        state: "{{ state_attr('climate.lounge_heat_pump', 'current_temperature') }}"
-        unit_of_measurement: '°C'
-
-# Open Sprinkler status MQTT
-# Dealing with unknown status, whilst waiting for first run after HA start
-# https://www.home-assistant.io/integrations/template/#startup
-# ICON
-# https://www.home-assistant.io/integrations/template/#change-the-icon-when-a-state-changes
-  - sensor:
-      - name: "Watering Pot Plants"
-        state: >
-          {% if is_state('sensor.opensprinkler_station_0', '1') %}
-            Watering
-          {% elif is_state('sensor.opensprinkler_station_0', '0') %}
-            Idle
-          {% else %}
-            Status Standby
-          {% endif %}
-        icon: >
-          {% if is_state('sensor.opensprinkler_station_0', '1') %}
-            mdi:sprinkler-variant
-          {% else %}
-            mdi:sprinkler
-          {% endif %}
-          
-  - sensor:
-      - name: "Watering Front Garden"
-        state: >
-          {% if is_state('sensor.opensprinkler_station_1', '1') %}
-            Watering
-          {% elif is_state('sensor.opensprinkler_station_1', '0') %}
-            Idle
-          {% else %}
-            Status Standby
-          {% endif %} 
-        icon: >
-          {% if is_state('sensor.opensprinkler_station_1', '1') %}
-            mdi:sprinkler-variant
-          {% else %}
-            mdi:sprinkler
-          {% endif %}
-
-  - sensor:
-      - name: "Dryer"
-        state: >
-          {% if is_state('binary_sensor.clothes_dryer_accelerometer', 'on') %}
-            Dryer On
-          {% elif is_state('binary_sensor.clothes_dryer_accelerometer', 'off') %}
-            Dryer Off
-          {% else %}
-            Status standby
-          {% endif %}
-        icon: >
-          {% if is_state('binary_sensor.clothes_dryer_accelerometer', 'on') %}
-            mdi:tumble-dryer
-          {% elif is_state('binary_sensor.clothes_dryer_accelerometer', 'off') %}
-            mdi:tumble-dryer-off
-          {% else %}
-            mdi:tumble-dryer-alert
-          {% endif %}
-
-  - sensor:
-    # Average multiple sensors into a single sensore, rather than using mean.
-    # https://www.home-assistant.io/integrations/template/#state-based-template-sensors
-    # https://www.home-assistant.io/integrations/min_max
-      - name: "Living Room Temperature"
-        device_class: temperature
-        unit_of_measurement: '°C'
-        state: >
-          {% set lr1 = states('sensor.motion_living_room_temperature') | float %}
-          {% set dr1 = states('sensor.motion_dining_d0170b01_temperature') | float %}
-          {% set sen1 = states('sensor.sensibo_temperature') | float %}
-          {{ ((lr1 + dr1 + sen1) / 3) | round(1, default=0) }}
-
-  - sensor:
-    # https://www.home-assistant.io/integrations/harmony#examples
-    - name: 'Media Centre'
-      state: >
-        {{ state_attr('remote.media_centre', 'current_activity') }}
-      icon: mdi:television-classic
-
-  - sensor:
-      - name: "Disarm user codes"
-        state: Mapped in attributes
-        attributes: !secret disarm_user_codes
-
-      - name: "Touchpad display"
-        unique_id: touchpad_display
-        state: >-
-          {% if is_state('input_text.touchpad_code', '') %}
-              {% set mode =
-                states('alarm_control_panel.intrusion_alarm') %}
-              {{ {
-                  'disarmed': 'READY TO ARM',
-                  'armed_home': 'ARMED FOR HOME',
-                  'armed_away': "ARMED FOR AWAY",
-                  'armed_night': 'ARMED FOR NIGHT',
-                  'armed_vacation': 'ARMED FOR VACATION',
-                  'triggered': 'INTRUSION ALARM',
-                  'pending': 'PENDING ALARM',
-                  'arming': 'ARMING ALARM'
-                } [mode] }}
-          {% else %}
-            {{ '****'[:(states('input_text.touchpad_code')
-              | length)] }}
-          {% endif %}
-
-mqtt:
-  sensor:
-  # Open sprinker
-  # https://www.home-assistant.io/integrations/sensor.mqtt/
-    - name: "OpenSprinkler Station 0"
-      # "Pot Plants"
-      state_topic: "opensprinkler/station/0"
-      value_template: "{{ value_json.state }}"
-    - name: "OpenSprinkler Station 1"
-      # "Front Garden"
-      state_topic: "opensprinkler/station/1"
-      value_template: "{{ value_json.state }}"
-    - name: "OpenSprinkler Station 0 Last Watering Time"
-      state_topic: "opensprinkler/station/0"
-      value_template: "{{ value_json.duration }}"
-      icon: mdi:timer-sand-complete
-    - name: "OpenSprinkler Station 1 Last Watering Time"
-      state_topic: "opensprinkler/station/1"
-      value_template: "{{ value_json.duration }}"
-      icon: mdi:timer-sand-complete

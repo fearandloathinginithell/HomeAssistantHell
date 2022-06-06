@@ -1,0 +1,7 @@
+# https://bonani.tech/making-home-assistants-presence-detection-not-so-binary-node-red-version/
+  - sensor:
+    - name: "suze"
+      state: "{{ states('input_select.suze') }}"
+  - sensor:
+    - name: "matt"
+      state: "{{ states('input_select.matt') }}"

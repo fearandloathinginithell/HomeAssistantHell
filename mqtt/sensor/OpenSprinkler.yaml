@@ -1,0 +1,26 @@
+  # Open sprinker
+  # https://www.home-assistant.io/integrations/sensor.mqtt/
+    - name: "OpenSprinkler Station 0"
+      # "Pot Plants"
+      state_topic: "opensprinkler/station/0"
+      value_template: "{{ value_json.state }}"
+    - name: "OpenSprinkler Station 1"
+      # "Front Garden"
+      state_topic: "opensprinkler/station/1"
+      value_template: "{{ value_json.state }}"
+    - name: "OpenSprinkler Station 2"
+      # "Not Active"
+      state_topic: "opensprinkler/station/2"
+      value_template: "{{ value_json.state }}"
+    - name: "OpenSprinkler Station 0 Last Watering Time"
+      state_topic: "opensprinkler/station/0"
+      value_template: "{{ value_json.duration }}"
+      icon: mdi:timer-sand-complete
+    - name: "OpenSprinkler Station 1 Last Watering Time"
+      state_topic: "opensprinkler/station/1"
+      value_template: "{{ value_json.duration }}"
+      icon: mdi:timer-sand-complete
+    - name: "OpenSprinkler Station 2 Last Watering Time"
+      state_topic: "opensprinkler/station/2"
+      value_template: "{{ value_json.duration }}"
+      icon: mdi:timer-sand-complete

@@ -1,0 +1,45 @@
+  - sensor:
+    - name: "Dryer"
+      state: >
+          {% if is_state('binary_sensor.clothes_dryer_accelerometer', 'on') %}
+            Dryer On
+          {% elif is_state('binary_sensor.clothes_dryer_accelerometer', 'off') %}
+            Dryer Off
+          {% else %}
+            Status standby
+          {% endif %}
+      icon: >
+          {% if is_state('binary_sensor.clothes_dryer_accelerometer', 'on') %}
+            mdi:tumble-dryer
+          {% elif is_state('binary_sensor.clothes_dryer_accelerometer', 'off') %}
+            mdi:tumble-dryer-off
+          {% else %}
+            mdi:tumble-dryer-alert
+          {% endif %}
+
+  - sensor:
+    # Average multiple sensors into a single sensore, rather than using mean.
+    # https://www.home-assistant.io/integrations/template/#state-based-template-sensors
+    # https://www.home-assistant.io/integrations/min_max
+    - name: "Living Room Temperature"
+      device_class: temperature
+      unit_of_measurement: '°C'
+      state: >
+          {% set lr1 = states('sensor.motion_living_room_temperature') | float %}
+          {% set dr1 = states('sensor.motion_dining_d0170b01_temperature') | float %}
+          {% set sen1 = states('sensor.sensibo_temperature') | float %}
+          {{ ((lr1 + dr1 + sen1) / 3) | round(1, default=0) }}
+    # https://community.home-assistant.io/t/expose-sensibo-sensors/154984/5
+    # Expose Humidity from sensibo Controller
+  - sensor:
+    - name: "Living Room Humidity"
+      device_class: humidity
+      state: "{{ state_attr('climate.lounge_heat_pump', 'current_humidity') }}"
+      unit_of_measurement: '%'
+
+# Expose Temperature from Sensibo Contoller
+  - sensor:
+      - name: "Sensibo Temperature"
+        device_class: temperature
+        state: "{{ state_attr('climate.lounge_heat_pump', 'current_temperature') }}"
+        unit_of_measurement: '°C'

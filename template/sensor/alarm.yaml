@@ -1,0 +1,24 @@
+  - sensor:
+    - name: "Disarm user codes"
+      state: Mapped in attributes
+      attributes: !secret disarm_user_codes
+    - name: "Touchpad display"
+      unique_id: touchpad_display
+      state: >-
+          {% if is_state('input_text.touchpad_code', '') %}
+              {% set mode =
+                states('alarm_control_panel.intrusion_alarm') %}
+              {{ {
+                  'disarmed': 'READY TO ARM',
+                  'armed_home': 'ARMED FOR HOME',
+                  'armed_away': "ARMED FOR AWAY",
+                  'armed_night': 'ARMED FOR NIGHT',
+                  'armed_vacation': 'ARMED FOR VACATION',
+                  'triggered': 'INTRUSION ALARM',
+                  'pending': 'PENDING ALARM',
+                  'arming': 'ARMING ALARM'
+                } [mode] }}
+          {% else %}
+            {{ '****'[:(states('input_text.touchpad_code')
+              | length)] }}
+          {% endif %}
