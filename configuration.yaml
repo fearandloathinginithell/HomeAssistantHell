@@ -23,6 +23,7 @@ stream:
 
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
 automation: !include_dir_merge_list automation/
+binary_sensor: !include_dir_merge_list binary_sensor/
 cover: !include_dir_merge_list cover/
 group: !include groups.yaml
 input_select: !include input_select/people.yaml
@@ -81,19 +82,7 @@ zha:
       salus_provider: false
 
 # Need to come back to configuring this.
-alexa:
-  smart_home:
-    locale: en-AU
-    endpoint: https://api.fe.amazonalexa.com/v3/events
-    filter:
-      # include_domains:
-      include_entities:
-        - switch.shelly_1_e09806967ca8_relay_0
-      # include_entity_globs:
-      # exclude_entities:
-    entity_config:
-      switch.shelly_1_e09806967ca8_relay_0:
-        display_categories: CONTACT_SENSOR
+cloud: !include cloud.yaml
 
 # Switch to lights
 # light:
@@ -111,22 +100,3 @@ input_text:
 # https://community.home-assistant.io/t/notification-to-state-which-sensor-triggered-manual-alarm/146071/7
     trigger_source:
       name: Trigger Source
-
-binary_sensor:
-# Motion sensor from Hikvission camera
-# https://www.home-assistant.io/integrations/hikvision/
-  - platform: hikvision
-    host: !secret cam1ip
-    username: !secret viewer
-    password: !secret viewerpass
-    port: 80
-    ssl: false
-    customize:
-      motion:
-        delay: 30
-      line_crossing:
-        ignored: true
-      field_detection:
-        ignored: true
-      disk_full:
-        ignored: true

@@ -16,8 +16,10 @@
       icon: >
           {% if is_state('sensor.opensprinkler_station_0', '1') %}
             mdi:sprinkler-variant
-          {% else %}
+          {% elif is_state('sensor.opensprinkler_station_0', '0') %}
             mdi:sprinkler
+          {% else %}
+            mdi:connection
           {% endif %}
           
   - sensor:
@@ -33,6 +35,8 @@
       icon: >
           {% if is_state('sensor.opensprinkler_station_1', '1') %}
             mdi:sprinkler-variant
-          {% else %}
+          {% elif is_state('sensor.opensprinkler_station_1', '0') %}
             mdi:sprinkler
+          {% else %}
+            mdi:connection
           {% endif %}

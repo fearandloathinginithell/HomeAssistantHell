@@ -1,18 +1,21 @@
 substitutions:
-  device_name: tagreadera
-  friendly_name: Tag Reader A
+  device_name: "tagreader"
+  friendly_name: Tag Reader
   device_description: "NFC tag reader, specially created for Home Assistant"
+  #  Derived from name: adonno.tag_reader, 1.4
+  project_name: homeassistanthell.tag_reader
+  project_version: "1.0"
   # Webserver credentials ⬇ #
-  web_username: !secret tagreadera_web_username
-  web_password: !secret tagreadera_web_password
+  web_username: !secret tagreader_web_username
+  web_password: !secret tagreader_web_password
   # Wifi credentials ⬇ #
   ssid_ssid: !secret wifi_ssid
   ssid_password: !secret wifi_password
   # API credentials ⬇ #
-  api_password: !secret tagreadera_api_password
-  api_encryption: !secret tagreadera_api_encryption
+  api_password: !secret tagreader_api_password
+  api_encryption: !secret tagreader_api_encryption
   # Fallback password ⬇ #
-  fallback_password: !secret tagreadera_fallback_password
+  fallback_password: !secret tagreader_fallback_password
 
 # WiFi credentials ⬇ #
 wifi:
@@ -36,26 +39,24 @@ ota:
 # Enable the captive portal for inital WiFi setup
 captive_portal:
 
-dashboard_import:
-  package_import_url: github://adonno/tagreader/tagreader.yaml
+# dashboard_import:
+#  package_import_url: github://adonno/tagreader/tagreader.yaml
 
 improv_serial:
 
 esphome:
-  name: '${device_name}'
-  comment: '${device_description}'
-  platform: ESP8266
-  board: d1_mini
-
+  name: "${device_name}"
   # Automatically add the mac address to the name
   # so you can use a single firmware for all devices
   name_add_mac_suffix: true
-
+  comment: '${device_description}'
+  platform: ESP8266
+  board: d1_mini
   # This will allow for (future) project identification,
   # configuration and updates.
   project:
-    name: adonno.tag_reader
-    version: "1.4"
+    name: '${project_name}'
+    version: '${project_version}'
 # If buzzer is enabled, notify on api connection success
   on_boot:
     priority: -10
@@ -204,38 +205,6 @@ api:
         std::string uri = "https://www.home-assistant.io/tag/";
         uri += tag_id;
         message->add_uri_record(uri);
-        id(pn532_board).write_mode(message);
-    - rtttl.play: "write:d=24,o=5,b=100:b"
-    - wait_until:
-        not:
-          pn532.is_writing:
-    - light.turn_off:
-        id: activity_led
-    - rtttl.play: "write:d=24,o=5,b=100:b,b"
-
-  - service: write_music_tag
-    variables:
-      music_url: string
-      music_info: string
-    then:
-    - light.turn_on:
-        id: activity_led
-        brightness: 100%
-        red: 100%
-        green: 0%
-        blue: 0%    
-    - lambda: |-
-        auto message = new nfc::NdefMessage();
-        std::string uri = "";
-        std::string text = "";
-        uri += music_url;
-        text += music_info;
-        if ( music_url != "" ) {
-          message->add_uri_record(uri);
-        }
-        if ( music_info != "" ) {
-          message->add_text_record(text);
-        }
         id(pn532_board).write_mode(message);
     - rtttl.play: "write:d=24,o=5,b=100:b"
     - wait_until:

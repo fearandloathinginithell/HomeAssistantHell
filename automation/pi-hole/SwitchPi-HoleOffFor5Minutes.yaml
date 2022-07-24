@@ -1,0 +1,10 @@
+- alias: "Switch Pi-Hole off for 5 minutes"
+  trigger:
+    - platform: state
+      entity_id: input_button.disable_pihole
+  action:
+    - service: pi_hole.disable
+      data:
+        duration: '00:05'
+      target:
+        entity_id: all

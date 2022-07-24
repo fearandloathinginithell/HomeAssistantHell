@@ -2,9 +2,12 @@
     name: "Alarm Edge Sensors"
     all: false
     entities:
-      - binary_sensor.master_bedroom_window_state
+      - binary_sensor.garage_door
       - binary_sensor.kitchen_window
-      
+      - binary_sensor.master_bedroom_window_state
+      - binary_sensor.north_window_left_state
+      - binary_sensor.north_window_right_state
+
   alarm_internal_sensors:
     name: "Alarm Internal Sensors"
     all: false

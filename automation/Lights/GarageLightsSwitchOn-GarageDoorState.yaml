@@ -1,0 +1,9 @@
+  - alias: "Garage Door Lights On, On Opening Roller Door"
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.garage_roller_door_external_input
+        to: "off"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.garage_lights

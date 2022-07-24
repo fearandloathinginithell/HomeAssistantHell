@@ -1,0 +1,18 @@
+  - platform: template
+    switches:
+      heat23:
+        friendly_name: "Heat 23"
+        value_template: "{{ is_state('climate.lounge_heat_pump', 'cool') or is_state('climate.lounge_heat_pump', 'heat') or is_state('climate.lounge_heat_pump', 'dry') or is_state('climate.lounge_heat_pump', 'fan_only') }}"
+        turn_on:
+          service: climate.set_hvac_mode
+          target:
+            entity_id: climate.lounge_heat_pump
+          data:
+            hvac_mode: "heat"
+        turn_off:
+          service: climate.set_hvac_mode
+          target:
+            entity_id: climate.lounge_heat_pump
+          data:
+            temperature: 23
+            hvac_mode: "off"

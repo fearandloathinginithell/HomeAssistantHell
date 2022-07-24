@@ -1,0 +1,17 @@
+# https://www.nabucasa.com/config/amazon_alexa/
+# https://www.nabucasa.com/config/amazon_alexa/
+alexa:
+  filter:
+    include_entities:
+      - light.owl_lamp
+      - light.living_room_sofa_lights
+      - light.living_room_lights
+  entity_config:
+    light.owl_lamp:
+      name: Sideboard Lamp
+      description: Owl lamp
+    light.living_room_sofa_lights:
+      name: Sofa Lights
+      description: Sofa Lights
+    light.living_room_lights:
+      name: Living Room Lights
