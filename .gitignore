@@ -13,6 +13,8 @@
 !automation/*
 !automation/AlarmPanel/*
 !automation/Shellies/*
+!binary_sensor
+!binary_sensor/*
 !cover
 !cover/*
 !cover/command_line/*

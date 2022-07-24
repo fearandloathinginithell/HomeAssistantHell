@@ -1,0 +1,17 @@
+# Motion sensor from Hikvission camera
+# https://www.home-assistant.io/integrations/hikvision/
+  - platform: hikvision
+    host: !secret cam1ip
+    username: !secret viewer
+    password: !secret viewerpass
+    port: 80
+    ssl: false
+    customize:
+      motion:
+        delay: 30
+      line_crossing:
+        ignored: true
+      field_detection:
+        ignored: true
+      disk_full:
+        ignored: true
