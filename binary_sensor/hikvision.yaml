@@ -1,10 +1,10 @@
-# Motion sensor from Hikvission camera
+# Motion sensor from Hikvision camera
 # https://www.home-assistant.io/integrations/hikvision/
   - platform: hikvision
-    host: !secret cam1ip
-    username: !secret viewer
-    password: !secret viewerpass
-    port: 80
+    host: !secret hikvisioncam1ip
+    username: !secret hikvisionaccount
+    password: !secret hikvisionaccountpass
+    port: !secret hikvisioncamport
     ssl: false
     customize:
       motion:
