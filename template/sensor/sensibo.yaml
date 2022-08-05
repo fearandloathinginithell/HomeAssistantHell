@@ -1,14 +1,16 @@
 # https://community.home-assistant.io/t/expose-sensibo-sensors/154984/5
 # Expose Humidity from sensibo Controller
   - sensor:
-    - name: "Living Room Humidity"
+    - name: "Sensibo living room humidity"
+      unique_id: '85c5ae10-5bb2-4b27-a70d-c5abed0bbf97'
       device_class: humidity
       state: "{{ state_attr('climate.lounge_heat_pump', 'current_humidity') }}"
       unit_of_measurement: '%'
 
 # Expose Temperature from Sensibo Contoller
   - sensor:
-      - name: "Sensibo Temperature"
+      - name: "Sensibo living room temperature"
+        unique_id: '210c6142-6623-4f33-a049-d24f998e0842'
         device_class: temperature
         state: "{{ state_attr('climate.lounge_heat_pump', 'current_temperature') }}"
         unit_of_measurement: '°C'

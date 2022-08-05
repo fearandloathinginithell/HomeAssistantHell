@@ -1,4 +1,5 @@
   - alias: 'Send notification when alarm triggered'
+    id: '6d18d07c-8871-482f-88d1-19bd159fc6aa'
     trigger:
       - platform: state
         entity_id: alarm_control_panel.intrusion_alarm

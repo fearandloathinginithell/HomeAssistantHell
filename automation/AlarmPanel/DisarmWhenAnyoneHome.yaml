@@ -1,4 +1,5 @@
 - alias: "Disarm alarm when anyone Home"
+  id: '962edbd8-70c0-4998-9ce5-de50045b007d'
   trigger:
     - platform: state
       entity_id: group.any_alarm_users_home

@@ -2,6 +2,7 @@
     switches:
       heat23:
         friendly_name: "Heat 23"
+        unique_id: 'b4f541f5-bb4c-4df9-af4f-7d74d9dd3bc3'
         value_template: "{{ is_state('climate.lounge_heat_pump', 'cool') or is_state('climate.lounge_heat_pump', 'heat') or is_state('climate.lounge_heat_pump', 'dry') or is_state('climate.lounge_heat_pump', 'fan_only') }}"
         turn_on:
           service: climate.set_hvac_mode

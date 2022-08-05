@@ -1,5 +1,6 @@
 # https://community.home-assistant.io/t/touchpad-for-manual-alarm-control-panel-supports-multiple-user-codes/357688
 - alias: 'Touchpad code input'
+  id: '95a0152f-a79e-4b82-b0fb-ffd986e64475'
   description: ''
   trigger:
     - platform: state

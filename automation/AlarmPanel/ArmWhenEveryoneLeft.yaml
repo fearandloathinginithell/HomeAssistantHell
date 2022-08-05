@@ -1,4 +1,5 @@
 - alias: "Arm alarm when everyone Left"
+  id: '42575320-5d8e-4223-8f6f-a83f1c2a77a4'
   trigger:
     - platform: state
       entity_id: group.any_alarm_users_home
