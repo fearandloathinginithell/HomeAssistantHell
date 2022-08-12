@@ -4,9 +4,11 @@
     - platform: state
       entity_id: group.any_alarm_users_home
       to: "not_home"
+  condition:
+    - condition: state
+      entity_id: input_boolean.guest_mode
+      state: 'off'
   action:
     - service: alarm_control_panel.alarm_arm_away
       target:
         entity_id: alarm_control_panel.intrusion_alarm
-#      data: 
-#          code: xxxx

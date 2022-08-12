@@ -1,0 +1,13 @@
+- alias: "Toggle bedside light right"
+  id: '5b44a803-947f-44ee-8654-4e4fa76136e7'
+  trigger:
+    platform: event
+    event_type: shelly.click
+    event_data:
+      device: shellybutton1-98CDAC2DAAF4
+      channel: 1
+      click_type: single
+  action:
+    service: light.toggle
+    target:
+      entity_id: light.bedsidelight_right

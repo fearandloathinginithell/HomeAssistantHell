@@ -1,0 +1,24 @@
+# https://www.home-assistant.io/docs/automation/condition/
+# https://www.home-assistant.io/docs/scripts/conditions/
+- alias: 'Blind kitchen close sunset'
+  id: '25f66f5a-13f5-4b65-9089-f34f0983a5a5'
+  trigger:
+  - platform: sun
+    event: sunset
+  condition:
+  - not:
+    - condition: state
+      entity_id: binary_sensor.kitchen_window
+      state: 'on'
+  action:
+  - service: cover.close_cover
+    entity_id: cover.kitchen
+
+- alias: 'Blind kitchen open sunrise'
+  id: '69c1f824-abd8-48ed-97c7-17a3ad668b36'
+  trigger:
+  - platform: sun
+    event: sunrise
+  action:
+  - service: cover.open_cover
+    entity_id: cover.kitchen

@@ -1,0 +1,21 @@
+- alias: 'Blind master bedroom close sunset'
+  id: 'f2fc9964-0afe-44c9-8566-7c4cefbb03e9'
+  trigger:
+  - platform: sun
+    event: sunset
+  condition:
+  - condition: state
+    entity_id: binary_sensor.master_bedroom_window_state
+    state: 'off'
+  action:
+  - service: cover.close_cover
+    entity_id: cover.bedroom_master
+
+- alias: 'Blind master bedroom close sunrise'
+  id: '4e3fadfe-6208-46c4-9c0b-f5cc785a2a6c'
+  trigger:
+  - platform: sun
+    event: sunrise
+  action:
+  - service: cover.open_cover
+    entity_id: cover.bedroom_master

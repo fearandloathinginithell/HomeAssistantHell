@@ -1,0 +1,15 @@
+  - alias: 'Send notification alarm not armed due to guests'
+    id: 'd9baa378-c138-4de4-a9dd-022c7771dae4'
+    trigger:
+      - platform: state
+        entity_id: group.any_alarm_users_home
+        to: "not_home"
+    condition:
+      - condition: state
+        entity_id: input_boolean.guest_mode
+        state: 'on'
+    action:
+      - service: notify.notify
+        data_template:
+          title: "Alert!"
+          message: "The alarm has not been set due to guests" 

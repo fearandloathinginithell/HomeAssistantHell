@@ -1,0 +1,13 @@
+- alias: "Open garage roller door"
+  id: '36c7ea98-c849-4096-a140-36300124c07c'
+  trigger:
+    platform: event
+    event_type: shelly.click
+    event_data:
+      device: shellybutton1-98CDAC2C1FA0
+      channel: 1
+      click_type: single
+  action:
+    service: switch.turn_on
+    target:
+      entity_id: switch.garage_roller_door_shelly

@@ -76,7 +76,7 @@ zha:
   zigpy_config:
     ota:
       otau_directory: /config/zigpy_ota
-      ikea_provider: false
+      ikea_provider: true
 #      ikea_update_url: http://fw.test.ota.homesmart.ikea.net/feed/version_info.json
       ledvance_provider: false
       salus_provider: false

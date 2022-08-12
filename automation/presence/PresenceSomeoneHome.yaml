@@ -1,0 +1,13 @@
+- alias: "Presence when someone home"
+  id: '1ae839bc-81a9-4a54-95a7-95a9a4226bde'
+  trigger:
+    - platform: state
+      entity_id: group.any_alarm_users_home
+      to: "home"
+    - platform: state
+      entity_id: input_boolean.guest_mode
+      to: 'on'
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.dining_outlet_switch
