@@ -1,4 +1,4 @@
-- alias: "Toggle bedside light right"
+- alias: 'Click, toggle bedside light right'
   id: '5b44a803-947f-44ee-8654-4e4fa76136e7'
   trigger:
     platform: event

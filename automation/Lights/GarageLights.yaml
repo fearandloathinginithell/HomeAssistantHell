@@ -1,0 +1,21 @@
+  - alias: "Lights, garage 'off' closed roller door"
+    id: 'e7e6e90d-f592-4d02-85f7-161da3d2ea8f'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.garage_roller_door_external_input
+        to: "on"
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.garage_lights
+
+  - alias: "Lights, garage 'on' open roller door"
+    id: '69d2e1fc-3ba7-4f38-ba5e-71613aadf45a'
+    trigger:
+      - platform: state
+        entity_id: binary_sensor.garage_roller_door_external_input
+        to: "off"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.garage_lights

@@ -1,4 +1,4 @@
-- alias: "Switch Pi-Hole off for 5 minutes"
+- alias: 'Pi-Hole, switch off for 5 minutes'
   id: '67500502-8a0d-49c5-ae95-91dcf855e7bb'
   trigger:
     - platform: state

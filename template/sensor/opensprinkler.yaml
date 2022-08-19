@@ -5,6 +5,7 @@
 # https://www.home-assistant.io/integrations/template/#change-the-icon-when-a-state-changes
   - sensor:
     - name: "Watering Pot Plants"
+      unique_id: '5e41b29c-b1e0-4a8e-bf3d-e5a56bdb665d'
       state: >
           {% if is_state('sensor.opensprinkler_station_0', '1') %}
             Watering
@@ -24,6 +25,7 @@
           
   - sensor:
     - name: "Watering Front Garden"
+      unique_id: 'becb73bc-bef8-4501-a8d4-bfbfea62504f'
       state: >
           {% if is_state('sensor.opensprinkler_station_1', '1') %}
             Watering

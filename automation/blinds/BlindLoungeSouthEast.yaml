@@ -1,9 +1,10 @@
 # https://www.home-assistant.io/docs/scripts/#choose-a-group-of-actions
-- alias: 'Blind lounge southeast close sunset'
+- alias: 'Blind, lounge southeast close sunset'
   id: '5ab8bedb-8aa4-44ec-8df0-5f642604aa82'
   trigger:
   - platform: sun
     event: sunset
+    offset: "00:00:10"
   action:
     - choose:
         - conditions:
@@ -22,7 +23,7 @@
             - service: cover.close_cover
               entity_id: cover.lounge_south_east
 
-- alias: 'Blind lounge southeast close 23:00'
+- alias: 'Blind, lounge southeast close 23:00'
   id: '1379f32b-b39e-48b0-be25-637f6545692b'
   trigger:
   - platform: time
@@ -31,14 +32,15 @@
         - "23:30:00"
         - "23:59:00"
   action:
-  - service: cover.clove_cover
+  - service: cover.close_cover
     entity_id: cover.lounge_south_east
 
-- alias: 'Blind lounge southeast open sunrise'
+- alias: 'Blind, lounge southeast open sunrise'
   id: '482c85eb-8b80-4e96-adfc-73f5d85e3609'
   trigger:
   - platform: sun
     event: sunrise
+    offset: "00:00:10"
   action:
   - service: cover.open_cover
     entity_id: cover.lounge_south_east

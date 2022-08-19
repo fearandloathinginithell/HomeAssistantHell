@@ -1,0 +1,27 @@
+# https://www.home-assistant.io/docs/scripts/#choose-a-group-of-actions
+- alias: 'Blind, dining north close sunset'
+  id: '4144ea79-9537-41b9-8543-89fdbba51da0'
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: "00:00:30"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.north_window_left_state
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.north_window_right_state
+    state: 'off'
+  action:
+  - service: cover.close_cover
+    entity_id: cover.dining_north
+
+- alias: 'Blind, dining north open sunrise'
+  id: 'bc233b5b-65ee-4c3f-b864-764dcbb414b8'
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: "00:00:30"
+  action:
+  - service: cover.open_cover
+    entity_id: cover.dining_north

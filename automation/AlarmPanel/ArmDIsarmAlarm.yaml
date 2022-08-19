@@ -1,0 +1,27 @@
+- alias: "Alarm, 'arm alarm' when everyone left"
+  id: '42575320-5d8e-4223-8f6f-a83f1c2a77a4'
+  trigger:
+    - platform: state
+      entity_id: group.any_alarm_users_home
+      to: "not_home"
+  condition:
+    - condition: state
+      entity_id: input_boolean.guest_mode
+      state: 'off'
+  action:
+    - service: alarm_control_panel.alarm_arm_away
+      target:
+        entity_id: alarm_control_panel.intrusion_alarm
+
+- alias: "Alarm, 'disarm alarm' when anyone home"
+  id: '962edbd8-70c0-4998-9ce5-de50045b007d'
+  trigger:
+    - platform: state
+      entity_id: group.any_alarm_users_home
+      to: "home"
+  action:
+    - service: alarm_control_panel.alarm_disarm
+      target:
+        entity_id: alarm_control_panel.intrusion_alarm
+      data: 
+          code: !secret disarm_code

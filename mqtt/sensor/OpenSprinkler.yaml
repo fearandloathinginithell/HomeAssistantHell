@@ -2,25 +2,31 @@
   # https://www.home-assistant.io/integrations/sensor.mqtt/
     - name: "OpenSprinkler Station 0"
       # "Pot Plants"
+      unique_id: 'e2fe9492-0f6f-4c52-a139-47b7ce0dd403'
       state_topic: "opensprinkler/station/0"
       value_template: "{{ value_json.state }}"
     - name: "OpenSprinkler Station 1"
       # "Front Garden"
+      unique_id: 'a59252c4-d2de-4330-a5d1-d94b0ff6a4bc'
       state_topic: "opensprinkler/station/1"
       value_template: "{{ value_json.state }}"
     - name: "OpenSprinkler Station 2"
       # "Not Active"
+      unique_id: '99f70407-f8b3-43b4-a51a-ad85663372d9'
       state_topic: "opensprinkler/station/2"
       value_template: "{{ value_json.state }}"
     - name: "OpenSprinkler Station 0 Last Watering Time"
+      unique_id: 'd67286f2-de9c-46ce-94e8-516608110897'
       state_topic: "opensprinkler/station/0"
       value_template: "{{ value_json.duration }}"
       icon: mdi:timer-sand-complete
     - name: "OpenSprinkler Station 1 Last Watering Time"
+      unique_id: '38315320-b79a-423a-af95-d0c645350625'
       state_topic: "opensprinkler/station/1"
       value_template: "{{ value_json.duration }}"
       icon: mdi:timer-sand-complete
     - name: "OpenSprinkler Station 2 Last Watering Time"
+      unique_id: '9ac423ad-d371-4b71-be7e-49b927264468'
       state_topic: "opensprinkler/station/2"
       value_template: "{{ value_json.duration }}"
       icon: mdi:timer-sand-complete

@@ -1,5 +1,6 @@
   - sensor:
     - name: "Dryer"
+      unique_id: 'c49eb5fe-a2b9-42e1-961d-79cf0ef45adf'
       state: >
           {% if is_state('binary_sensor.clothes_dryer_accelerometer', 'on') %}
             Dryer On

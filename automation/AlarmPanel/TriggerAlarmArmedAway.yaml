@@ -1,4 +1,4 @@
-- alias: 'Trigger alarm while armed away'
+- alias: 'Alarm, trigger alarm while armed away'
   id: '9b46a0f4-96aa-4aa6-b520-de4882fdb915'
   trigger:
     - platform: state
@@ -31,7 +31,7 @@
       to: "on"
     - platform: state
       entity_id: binary_sensor.garage_roller_door_external_input
-      to: "on"
+      to: "off"
   condition:
     - condition: state
       entity_id: alarm_control_panel.intrusion_alarm

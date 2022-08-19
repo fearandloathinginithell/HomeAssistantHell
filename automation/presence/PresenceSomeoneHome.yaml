@@ -1,4 +1,4 @@
-- alias: "Presence when someone home"
+- alias: 'Presence, when someone home'
   id: '1ae839bc-81a9-4a54-95a7-95a9a4226bde'
   trigger:
     - platform: state

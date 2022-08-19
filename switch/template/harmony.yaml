@@ -2,9 +2,12 @@
     switches:
       # https://community.home-assistant.io/t/harmony-hub-activity/68392/9
       # https://community.home-assistant.io/t/harmony-activities-volume-slider-and-lovelace/72419
+      # https://www.home-assistant.io/integrations/switch.template/#configuration-variables
       # Sky TV Harmony Activity
       har_watch_sky_tv:
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Sky TV') }}"
+        friendly_name: "Watch sky tv"
+        unique_id: '66171b68-c85e-4c5e-8972-74ac56c94304'
         turn_on:
           service: remote.turn_on
           data:
@@ -17,6 +20,8 @@
             activity: 'PowerOff'
       # XBOX Harmony Activity
       har_play_xbox:
+        friendly_name: "Play XBOX"
+        unique_id: 'd8524ebb-6cd8-44e5-a302-f35321c21681'
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Play Xbox') }}"
         turn_on:
           service: remote.turn_on
@@ -30,6 +35,8 @@
             activity: 'PowerOff'
       # Apple TV Harmony Activity
       har_watch_apple_tv:
+        friendly_name: "Watch Apple TV"
+        unique_id: '882ab07f-185f-43de-8de6-398d18149765'
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Apple TV') }}"
         turn_on:
           service: remote.turn_on
@@ -43,6 +50,8 @@
             activity: 'PowerOff'
       # Freeview TV Harmony Activity
       har_freeview_tv:
+        friendly_name: "Watch Freeview TV"
+        unique_id: '3c98f25d-a908-4abd-877a-3f22115a7055'
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Freeview TV') }}"
         turn_on:
           service: remote.turn_on
@@ -56,6 +65,8 @@
             activity: 'PowerOff'
       # Radio Harmony Activity
       har_radio:
+        friendly_name: "Listen to Radio"
+        unique_id: '699cc400-2e6b-44b4-ac5b-ab07425b2cb0'
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Radio') }}"
         turn_on:
           service: remote.turn_on
@@ -69,6 +80,8 @@
             activity: 'PowerOff'
       # Watch Netflix Harmony Activity
       har_watch_netflix:
+        friendly_name: "Watch Netflix"
+        unique_id: 'e15f8493-d919-4091-ada4-a1583adfd13c'
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Watch Netflix') }}"
         turn_on:
           service: remote.turn_on
@@ -82,6 +95,8 @@
             activity: 'PowerOff'
       # Computer Harmony Activity
       har_computer:
+        friendly_name: "Not in Use"
+        unique_id: 'fc3a955d-33c4-4793-840a-991f5808fcf1'
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Computer') }}"
         turn_on:
           service: remote.turn_on
@@ -95,6 +110,8 @@
             activity: 'PowerOff'
       # Computer Harmony Activity
       har_vodafone_tv:
+        friendly_name: "Play Nintendo Switch"
+        unique_id: '354f9df1-2cdb-404d-8743-9437089593f0'
         value_template: "{{ is_state_attr('remote.media_centre', 'current_activity', 'Vodafone TV') }}"
         turn_on:
           service: remote.turn_on

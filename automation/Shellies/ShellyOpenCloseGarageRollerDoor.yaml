@@ -1,4 +1,4 @@
-- alias: "Open garage roller door"
+- alias: 'Click, open/close garage roller door'
   id: '36c7ea98-c849-4096-a140-36300124c07c'
   trigger:
     platform: event

@@ -1,6 +1,7 @@
   - sensor:
     # https://www.home-assistant.io/integrations/harmony#examples
     - name: 'Media Centre'
+      unique_id: '00aab8ef-13fd-4ffa-83c3-467adebc5bd0'
       state: >
         {{ state_attr('remote.media_centre', 'current_activity') }}
       icon: mdi:television-classic

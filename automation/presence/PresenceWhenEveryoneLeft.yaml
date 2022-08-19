@@ -1,4 +1,4 @@
-- alias: "Presence when everyone left"
+- alias: 'Presence, when everyone left'
   id: '272fab25-79e9-49d6-8721-47b1d093fd3e'
   trigger:
     - platform: state
