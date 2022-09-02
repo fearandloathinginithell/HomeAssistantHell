@@ -1,0 +1,13 @@
+- alias: 'Holi Holi Holiday'
+  id: 'b5ca85a1-f0eb-47e8-991f-619dd91512a4'
+  trigger:
+  - platform: state
+    entity_id: input_boolean.holiday_away
+    to: 'on'
+  condition: 
+  - condition: state
+    entity_id: input_boolean.holiday_home
+    state: 'on'
+  action:
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.holiday_home

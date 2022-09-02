@@ -10,7 +10,7 @@ homeassistant:
   currency: NZD
   temperature_unit: C
   time_zone: "Pacific/Auckland"
-  external_url: !secret external_url
+  # external_url: !secret external_url
   internal_url: !secret internal_url
   customize: !include customize.yaml
   customize_glob: !include customize_glob.yaml

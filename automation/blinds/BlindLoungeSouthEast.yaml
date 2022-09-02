@@ -9,7 +9,7 @@
     - choose:
         - conditions:
             - condition: state
-              entity_id: input_boolean.holiday
+              entity_id: input_boolean.holiday_away
               state: 'on'
           sequence:
             - service: cover.close_cover

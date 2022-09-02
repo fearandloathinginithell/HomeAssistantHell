@@ -1,0 +1,48 @@
+- alias: 'Blind, bedroom master close sunset'
+  id: 'f2fc9964-0afe-44c9-8566-7c4cefbb03e9'
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: "00:00:15"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.master_bedroom_window_state
+    state: 'off'
+  action:
+  - service: cover.close_cover
+    entity_id: cover.bedroom_master
+
+- alias: 'Blind, bedroom master open 06:15, weekdays'
+  id: '21661e69-6f05-4bf7-97f7-def0a1c091c1'
+  trigger:
+  - platform: time
+    at: 
+        - "06:15:00"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.holiday_home
+    state: 'off'
+  action:
+  - service: cover.open_cover
+    entity_id: cover.bedroom_master
+
+- alias: 'Blind, bedroom master open O8:30, weekends and holidays'
+  id: '0f935f42-2a14-495b-bf82-26a22188874a'
+  trigger:
+    - platform: time
+      at: 
+        - "08:30:00"
+  condition:
+    - or:
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.holiday_home
+        state: 'on'
+  action:
+  - service: cover.open_cover
+    entity_id: cover.bedroom_master

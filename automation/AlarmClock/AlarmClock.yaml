@@ -1,0 +1,46 @@
+- alias: 'Alarm Clock 06:00, weekdays'
+  id: '29523882-0923-48ef-87cf-4ebbc2028070'
+  trigger:
+  - platform: time
+    at: 
+        - "06:00:00"
+  condition:
+  - condition: state
+    entity_id: input_boolean.holiday_away
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.holiday_home
+    state: 'off'
+  action:
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.master_bedroom
+      media_content_id: "Shuffle Alt-Country Essentials"
+      media_content_type: APPLE_MUSIC
+
+- alias: 'Alarm Clock O8:30, weekends and holidays'
+  id: '42fc2556-a08e-4cd4-821b-c2d6b8588173'
+  trigger:
+    - platform: time
+      at: 
+        - "08:30:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.holiday_away
+      state: 'off'
+    - or:
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'off'
+      - condition: state
+        entity_id: input_boolean.holiday_home
+        state: 'on'
+  action:
+  - service: media_player.play_media
+    data:
+      entity_id: media_player.master_bedroom
+      media_content_id: "Shuffle Alt-Country Essentials"
+      media_content_type: APPLE_MUSIC

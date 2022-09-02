@@ -1,0 +1,21 @@
+  - alias: "Lights, Living Room 'on' sunset"
+    id: 'db1ec6dd-7718-4c9a-9bde-64e005334c05'
+    trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:30:00"
+    action:
+      - service: light.turn_on
+        target:
+          entity_id: light.living_room_lights
+
+  - alias: "Lights, Living Room 'off' 00:15"
+    id: 'efab4480-6e72-44ee-96a6-6c43b6f2071c'
+    trigger:
+    - platform: time
+      at: 
+          - "00:15:00"
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.living_room_lights
