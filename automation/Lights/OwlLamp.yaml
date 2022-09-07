@@ -1,0 +1,25 @@
+  - alias: "Lights, Owl Lamp 'on' sunset"
+    id: 'de17223b-7f93-486a-abac-66ebccd698ec'
+    trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:30:00"
+    action:
+      - service: hue.activate_scene
+        target:  
+          entity_id: scene.dining_tokyo
+        data:
+          brightness: 255
+          transition: 30
+          dynamic: true
+
+  - alias: "Lights, Owl Lamp 'off' 00:15"
+    id: 'd0a33fcf-aa83-426a-befe-e02b8a8af280'
+    trigger:
+    - platform: time
+      at: 
+          - "00:15:00"
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.owl_lamp

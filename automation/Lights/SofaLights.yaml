@@ -1,0 +1,25 @@
+  - alias: "Lights, Sofa Lights 'on' sunset"
+    id: 'f82ad08f-abba-4bef-b584-028ec474fe00'
+    trigger:
+    - platform: sun
+      event: sunset
+      offset: "-00:30:00"
+    action:
+      - service: hue.activate_scene
+        target:  
+          entity_id: scene.living_room_sofa_lights_read
+        data:
+          brightness: 205
+          transition: 30
+          dynamic: false
+
+  - alias: "Lights, Sofa Lights 'off' 00:15"
+    id: 'e7116bb6-7be5-4a21-ae66-555bdf7bcc5b'
+    trigger:
+    - platform: time
+      at: 
+          - "00:15:00"
+    action:
+      - service: light.turn_off
+        target:
+          entity_id: light.living_room_sofa_lights

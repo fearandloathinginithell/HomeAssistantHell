@@ -5,23 +5,17 @@
   - platform: sun
     event: sunset
     offset: "00:00:10"
+  condition:
+    - or:
+      - condition: state
+        entity_id: input_boolean.holiday_away
+        state: 'on'
+      - condition: state
+        entity_id: group.any_alarm_users_home
+        state: 'not_home'
   action:
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: input_boolean.holiday_away
-              state: 'on'
-          sequence:
-            - service: cover.close_cover
-              entity_id: cover.lounge_south_east
-    - choose:
-        - conditions:
-            - condition: state
-              entity_id: group.any_alarm_users_home
-              state: 'not_home'
-          sequence:
-            - service: cover.close_cover
-              entity_id: cover.lounge_south_east
+      - service: cover.close_cover
+        entity_id: cover.lounge_south_east
 
 - alias: 'Blind, lounge southeast close 23:00'
   id: '1379f32b-b39e-48b0-be25-637f6545692b'

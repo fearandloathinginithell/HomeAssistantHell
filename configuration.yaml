@@ -27,6 +27,7 @@ binary_sensor: !include_dir_merge_list binary_sensor/
 cover: !include_dir_merge_list cover/
 group: !include groups.yaml
 input_select: !include input_select/people.yaml
+konnected: !include konnected.yaml
 recorder: !include recorder.yaml
 scene: !include scenes.yaml
 script: !include_dir_merge_named scripts/
