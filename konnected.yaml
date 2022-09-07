@@ -1,0 +1,32 @@
+# https://dfederm.com/setting-up-a-security-system-with-home-assistant/
+# https://github.com/scarpazza/home-assistant-konnected-tutorial
+# https://help.konnected.io/support/solutions/articles/32000028978-alarm-panel-pro-inputs-and-outputs
+  access_token: !secret konnected_access_token
+  api_host: !secret konnected_api_host
+  devices:
+    - id: 4091510e05d3
+      binary_sensors:
+        - zone: 2
+          name: "Kitchen Motion"
+          type: motion
+          # https://help.konnected.io/support/solutions/articles/32000022628-wiring-your-motion-sensors
+        - zone: 3
+          name: "Lounge Motion"
+          type: motion
+        - zone: 4
+          name: "Hallway Motion"
+          type: motion
+        - zone: 12
+          name: "Front Door Reed"
+          type: door
+          # https://help.konnected.io/support/solutions/articles/32000022618-wiring-your-window-and-door-sensors
+      sensors:
+        - zone: 1
+          name: "Attic Temperature"
+          type: DS18B20
+          # https://help.konnected.io/support/solutions/articles/32000026315-wiring-temp-humidity-or-temperature-probe-sensors
+      switches:
+        - zone: alarm1
+          name: "Internal Siren"
+      host: !secret konnected_host
+      port: "9123"
