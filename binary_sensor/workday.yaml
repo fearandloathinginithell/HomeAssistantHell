@@ -7,3 +7,5 @@
     province: WGN
     workdays: [mon, tue, wed, thu, fri]
     excludes: [sat, sun, holiday]
+    add_holidays:
+      - '2022-09-26'

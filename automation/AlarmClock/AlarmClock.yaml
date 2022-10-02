@@ -15,11 +15,16 @@
     entity_id: input_boolean.holiday_home
     state: 'off'
   action:
-  - service: media_player.play_media
+    service: script.turn_on
+    target:
+      entity_id: script.alexaplaymedia
     data:
-      entity_id: media_player.master_bedroom
-      media_content_id: "Shuffle Alt-Country Essentials"
-      media_content_type: APPLE_MUSIC
+      variables:
+        enity_media_player: "media_player.master_bedroom"
+        stop_after_minutes_media_player: "60"
+        alexa_volume_media_player: '0.3'
+        alexa_media_content_id: "Shuffle Alt-Country Essentials"
+        alexa_media_content_type: "APPLE_MUSIC"
 
 - alias: 'Alarm Clock O8:30, weekends and holidays'
   id: '42fc2556-a08e-4cd4-821b-c2d6b8588173'
@@ -39,8 +44,13 @@
         entity_id: input_boolean.holiday_home
         state: 'on'
   action:
-  - service: media_player.play_media
+    service: script.turn_on
+    target:
+      entity_id: script.alexaplaymedia
     data:
-      entity_id: media_player.master_bedroom
-      media_content_id: "Shuffle Alt-Country Essentials"
-      media_content_type: APPLE_MUSIC
+      variables:
+        enity_media_player: "media_player.master_bedroom"
+        stop_after_minutes_media_player: "60"
+        alexa_volume_media_player: '0.3'
+        alexa_media_content_id: "Shuffle Alt-Country Essentials"
+        alexa_media_content_type: "APPLE_MUSIC"

@@ -34,3 +34,11 @@
     entities:
       - person.matt
       - person.suze
+  
+  alexas:
+    # https://github.com/custom-components/alexa_media_player/wiki#setting-up-a-last-alexa-sensor
+    name: "All Alexas"
+    entities:
+      - media_player.garage
+      - media_player.living_room
+      - media_player.master_bedroom

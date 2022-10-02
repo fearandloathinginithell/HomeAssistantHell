@@ -1,0 +1,9 @@
+blinds_master_bedroom_open:
+  alias: Open blinds master bedrooom
+  description: 'Open blinds master bedroom'
+  mode: parallel
+  sequence:
+    - alias: Open blinds master bedroom
+      service: cover.open_cover
+      target:
+        entity_id: cover.bedroom_master

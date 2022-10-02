@@ -2,21 +2,14 @@
   id: '9b46a0f4-96aa-4aa6-b520-de4882fdb915'
   trigger:
     - platform: state
-      entity_id: binary_sensor.motion_kitchen_ias_zone
+      entity_id: binary_sensor.alarm_motion_lounge
       to: "on"
-      for: "00:00:20"
     - platform: state
-      entity_id: binary_sensor.motion_living_room_ias_zone
+      entity_id: binary_sensor.alarm_motion_kitchen
       to: "on"
-      for: "00:00:20"
     - platform: state
-      entity_id: binary_sensor.motion_dining_d0170b01_ias_zone
+      entity_id: binary_sensor.alarm_motion_hallway
       to: "on"
-      for: "00:00:20"
-    - platform: state
-      entity_id: binary_sensor.motion_hallway_e4320b01_ias_zone
-      to: "on"
-      for: "00:00:20"
     - platform: state
       entity_id: binary_sensor.north_window_left_state
       to: "on"
@@ -28,6 +21,9 @@
       to: "on"
     - platform: state
       entity_id: binary_sensor.kitchen_window
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.alarm_motion_garage
       to: "on"
     - platform: state
       entity_id: binary_sensor.garage_roller_door_external_input

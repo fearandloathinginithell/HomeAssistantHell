@@ -1,0 +1,33 @@
+blinds_living_room_open:
+  alias: Open Living room blinds
+  description: 'Open living room blinds as a group'
+  mode: parallel
+  sequence:
+    - alias: Open blind lounge south east
+      service: cover.open_cover
+      target:
+        entity_id: cover.lounge_south_east
+    - delay:
+        seconds: "5"
+    - alias: Open blind lounge north west
+      service: cover.open_cover
+      target:
+        entity_id: cover.lounge_north_east
+    - delay:
+        seconds: "5"
+    - alias: Open blind dining north
+      service: cover.open_cover
+      target:
+        entity_id: cover.dining_north
+    - delay:
+        seconds: "5"
+    - alias: Open blind dining north west
+      service: cover.open_cover
+      target:
+        entity_id: cover.dining_north_west
+    - delay:
+        seconds: "5"
+    - alias: Open blind kitchen
+      service: cover.open_cover
+      target:
+        entity_id: cover.kitchen

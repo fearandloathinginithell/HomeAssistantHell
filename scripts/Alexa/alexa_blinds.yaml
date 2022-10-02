@@ -1,0 +1,27 @@
+open_blinds:
+  description: 'Open blinds from alexa'
+  sequence:
+    - service: homeassistant.turn_on
+      data_template:
+        entity_id: >-
+          {# Use the name of each Echo to determine which room the command likely came from. #}
+          {%- set room = states("sensor.last_alexa")|replace('media_player.','') -%}
+          {%- if room == "living_room" -%}
+            script.blinds_living_room_open
+          {%- elif room == "master_bedromm" -%}
+            script.blinds_master_bedroom_open
+          {%- endif -%}
+
+close_blinds:
+  description: 'Close blinds from alexa'
+  sequence:
+    - service: homeassistant.turn_on
+      data_template:
+        entity_id: >-
+          {# Use the name of each Echo to determine which room the command likely came from. #}
+          {%- set room = states("sensor.last_alexa")|replace('media_player.','') -%}
+          {%- if room == "living_room" -%}
+            script.blinds_living_room_close
+          {%- elif room == "master_bedromm" -%}
+            script.blinds_master_bedroom_close
+          {%- endif -%}

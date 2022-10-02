@@ -1,0 +1,33 @@
+blinds_living_room_close:
+  alias: Close blinds living room 
+  description: 'Close blinds living room'
+  mode: parallel
+  sequence:
+    - alias: Close blinds lounge south east
+      service: cover.close_cover
+      target:
+        entity_id: cover.lounge_south_east
+    - delay:
+        seconds: "5"
+    - alias: Close blinds lounge north west
+      service: cover.close_cover
+      target:
+        entity_id: cover.lounge_north_east
+    - delay:
+        seconds: "5"
+    - alias: Close blinds dining north
+      service: cover.close_cover
+      target:
+        entity_id: cover.dining_north
+    - delay:
+        seconds: "5"
+    - alias: Close blinds dining north west
+      service: cover.close_cover
+      target:
+        entity_id: cover.dining_north_west
+    - delay:
+        seconds: "5"
+    - alias: Close blinds kitchen
+      service: cover.close_cover
+      target:
+        entity_id: cover.kitchen

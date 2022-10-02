@@ -1,0 +1,9 @@
+blinds_master_bedroom_close:
+  alias: Close blinds master bedrooom
+  description: 'Close blinds master bedroom'
+  mode: parallel
+  sequence:
+    - alias: Close blinds master bedroom
+      service: cover.close_cover
+      target:
+        entity_id: cover.bedroom_master

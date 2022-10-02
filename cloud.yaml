@@ -1,11 +1,15 @@
 # https://www.nabucasa.com/config/amazon_alexa/
-# https://www.nabucasa.com/config/amazon_alexa/
+# https://developer.amazon.com/en-US/docs/alexa/device-apis/alexa-discovery.html#display-categories
 alexa:
   filter:
+    # Settings\Home Assistant Cloud\Alexa\sync entities to amazon
+    # manage entities
     include_entities:
       - light.owl_lamp
       - light.living_room_sofa_lights
       - light.living_room_lights
+      - script.open_blinds
+      - script.close_blinds
   entity_config:
     light.owl_lamp:
       name: Sideboard Lamp
@@ -15,3 +19,9 @@ alexa:
       description: Sofa Lights
     light.living_room_lights:
       name: Living Room Lights
+    script.open_blinds:
+      name: Blinds open HA script
+      description: "HA Script that is aware which Alexa is making the call to open blinds"
+    script.close_blinds:
+      name: Blinds close HA script
+      description: "HA Script that is aware which Alexa is making the call to close blinds"

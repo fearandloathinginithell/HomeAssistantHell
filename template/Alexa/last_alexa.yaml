@@ -1,0 +1,7 @@
+  - sensor:
+      - name: last_alexa
+        # https://github.com/custom-components/alexa_media_player/wiki#setting-up-a-last-alexa-sensor
+        state: >
+          {{ expand('group.alexas') | selectattr('attributes.last_called','eq',True) | map(attribute='entity_id') | first }}
+        availability: >
+          {{ expand('group.alexas') | selectattr('attributes.last_called','eq',True) | first is defined }}

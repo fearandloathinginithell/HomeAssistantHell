@@ -1,0 +1,46 @@
+alexaplaymedia:
+  alias: Alexa media player
+  description: 'uses variables to play media via Alexa'
+  fields:
+    enity_media_player:
+      description: Amazon Echo called
+      example: media_player.master_bedroom
+    stop_after_minutes_media_player:
+      description: Stop after X minutes
+      example: "60"
+    alexa_volume_media_player:
+      description: set alexa volume
+      example: "0.3"
+    alexa_media_content_id:
+      description: Alexa Content
+      example: "Shuffle Alt-Country Essentials"
+    alexa_media_content_type:
+      description: content type
+      example: "APPLE_MUSIC"
+  mode: parallel
+  sequence:
+    - alias: Set intial alexa volume
+      service: media_player.volume_set
+      data:
+        volume_level: "{{ alexa_volume_media_player }}"
+      target:
+        entity_id: "{{ enity_media_player }}"
+
+    - alias: media to play
+      service: media_player.play_media
+      data:
+        media_content_id: "{{ alexa_media_content_id }}"
+        media_content_type: "{{ alexa_media_content_type }}"
+      target:
+        entity_id: "{{ enity_media_player }}"
+
+    - delay:
+        minutes: "{{ stop_after_minutes_media_player }}"
+
+    - alias: Silence alexa playing
+      service: media_player.play_media
+      data:
+        media_content_id: Stop
+        media_content_type: custom
+      target:
+        entity_id: "{{ enity_media_player }}"
