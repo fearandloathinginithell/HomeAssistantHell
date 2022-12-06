@@ -22,12 +22,15 @@ wake_on_lan:
 stream:
 
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
+alert: !include_dir_merge_named alerts/
 automation: !include_dir_merge_list automation/
 binary_sensor: !include_dir_merge_list binary_sensor/
+cloud: !include cloud.yaml
 cover: !include_dir_merge_list cover/
 group: !include groups.yaml
 input_select: !include input_select/people.yaml
 # konnected: !include konnected.yaml
+notify: !include notify.yaml
 recorder: !include recorder.yaml
 scene: !include scenes.yaml
 script: !include_dir_merge_named scripts/
@@ -37,17 +40,15 @@ template: !include_dir_merge_list template/
 
 mqtt:
   sensor: !include_dir_merge_list mqtt/sensor/
-# Text to speech
-tts:
-  - platform: google_translate
 
 # https://community.home-assistant.io/t/touchpad-for-manual-alarm-control-panel-supports-multiple-user-codes/357688
+# https://www.home-assistant.io/integrations/manual/
 alarm_control_panel:
   - platform: manual
     name: Intrusion alarm
     code: !secret disarm_code
     code_arm_required: false
-    # trigger_time: 0
+    trigger_time: 120 # Default
     armed_away:
       delay_time: 0
       arming_time: 10
@@ -65,14 +66,6 @@ http:
   ip_ban_enabled: true
   login_attempts_threshold: 5
 
-panasonic_viera:
-  host: !secret TVIP
-  name: Living Room TV
-  turn_on_action:
-    - service: wake_on_lan.send_magic_packet
-      data:
-        mac: !secret TVMAC
-
 zha:
   zigpy_config:
     ota:
@@ -81,9 +74,6 @@ zha:
 #      ikea_update_url: http://fw.test.ota.homesmart.ikea.net/feed/version_info.json
       ledvance_provider: false
       salus_provider: false
-
-# Need to come back to configuring this.
-cloud: !include cloud.yaml
 
 # Switch to lights
 # light:

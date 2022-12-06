@@ -8,7 +8,7 @@ open_blinds:
           {%- set room = states("sensor.last_alexa")|replace('media_player.','') -%}
           {%- if room == "living_room" -%}
             script.blinds_living_room_open
-          {%- elif room == "master_bedromm" -%}
+          {%- elif room == "master_bedroom" -%}
             script.blinds_master_bedroom_open
           {%- endif -%}
 
@@ -22,6 +22,7 @@ close_blinds:
           {%- set room = states("sensor.last_alexa")|replace('media_player.','') -%}
           {%- if room == "living_room" -%}
             script.blinds_living_room_close
-          {%- elif room == "master_bedromm" -%}
+          {%- elif room == "master_bedroom" -%}
             script.blinds_master_bedroom_close
           {%- endif -%}
+          

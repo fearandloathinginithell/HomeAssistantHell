@@ -42,3 +42,11 @@
       - media_player.garage
       - media_player.living_room
       - media_player.master_bedroom
+
+  Garage Doors:
+    # https://community.home-assistant.io/t/simple-and-effective-alerting/394027#simple-and-effective-alerting-1
+    name: "Garage doors group"
+    all: false
+    icon: mdi:garage-variant
+    entities:
+      - binary_sensor.garage_roller_door_external_input

@@ -3,6 +3,7 @@
     switches:
       front_door_shelly:
         friendly_name: "kitchen Door"
+        unique_id: '3738186c-441d-4a70-8b12-b176be443882'
         value_template: "{{ is_state('switch.front_door', 'on') }}"
         turn_on:
           service: switch.turn_on
@@ -24,7 +25,8 @@
   - platform: template
     switches:
       garage_roller_door_shelly:
-        friendly_name: "Garage Roller Door"
+        unique_id: '0ff64dbb-6f1b-4aa3-b3dd-197e93d9e9a5'
+        friendly_name: "Garage Roller Door Opener"
         value_template: "{{ is_state('switch.garage_roller_door', 'on') }}"
         turn_on:
           service: switch.turn_on
@@ -35,10 +37,8 @@
           data:
             entity_id: switch.garage_roller_door
         icon_template: >
-          {% if is_state('binary_sensor.garage_roller_door_external_input', 'off') %}
+          {% if is_state('binary_sensor.garage_roller_door_external_input', 'on') %}
             mdi:garage-open-variant
-          {% elif is_state('switch.garage_roller_door', 'on') %}
-            mdi:garage-variant
-          {% elif is_state('switch.garage_roller_door', 'off') %}
+          {% elif is_state('binary_sensor.garage_roller_door_external_input', 'off') %}
             mdi:garage-variant-lock
           {% endif %}

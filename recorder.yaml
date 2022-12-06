@@ -28,6 +28,7 @@ exclude:
    - switch.har_*
    - switch.media_centre_*
    - switch.shelly_*_relay_*
+   - update.*_firmware_update
    entities:
    - automation.shellies_announce
    - automation.shellies_discovery
