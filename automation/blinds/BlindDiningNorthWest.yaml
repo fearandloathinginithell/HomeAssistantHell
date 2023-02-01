@@ -5,6 +5,13 @@
   - platform: sun
     event: sunset
     offset: "00:00:25"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.living_room_french_door_left_state
+    state: 'off'
+  - condition: state
+    entity_id: binary_sensor.living_room_french_door_right_state
+    state: 'off'
   action:
   - service: cover.close_cover
     entity_id: cover.dining_north_west

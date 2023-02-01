@@ -1,21 +1,23 @@
   - binary_sensor:
     - name: "Front Door"
+      unique_id: '59e58c89-e2b5-4360-aa6f-56ab52ff6a97'
       device_class: door
         # create a enitity that changes icon state with device state, without defining icon
         # https://www.home-assistant.io/integrations/binary_sensor/#device-class
       state: >
           {% if is_state('binary_sensor.front_door_external_input', 'off') %}
-            on
-          {% elif is_state('binary_sensor.front_door_external_input', 'on') %}
             off
+          {% elif is_state('binary_sensor.front_door_external_input', 'on') %}
+            on
           {% endif %}
         # https://www.home-assistant.io/integrations/template/#multiline-example-with-an-if-test
   - binary_sensor:
     - name: "Garage Door"
+      unique_id: '8434849c-f3bb-4c4d-bdb3-65a7f437183b'
       device_class: garage_door
       state: >
           {% if is_state('binary_sensor.garage_roller_door_external_input', 'off') %}
-            on
-          {% elif is_state('binary_sensor.garage_roller_door_external_input', 'on') %}
             off
+          {% elif is_state('binary_sensor.garage_roller_door_external_input', 'on') %}
+            on
           {% endif %}

@@ -4,6 +4,8 @@
 !README.md
 !*.yaml
 !.gitignore
+!alerts
+!alerts/*
 !Assets
 !Assets/*
 !Assets/README/*
@@ -43,6 +45,7 @@
 !template/sensor/*
 # Explit Exclude.
 Assets/floorplans/house.jpg
+mqtt/switch/RingAlarm.yaml
 esphome/secrets.yaml
 input_select/people.yaml
 ip_bans.yaml

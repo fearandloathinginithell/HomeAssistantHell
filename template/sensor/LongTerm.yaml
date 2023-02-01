@@ -1,0 +1,77 @@
+# https://community.home-assistant.io/t/long-term-maximum-temperature-sensor/441348/10
+- trigger:
+    - platform: state
+      entity_id: sensor.attic_temperature  # Source sensor
+    - platform: state
+      entity_id: input_number.max_temp_step
+    - platform: state
+      entity_id: input_boolean.reset_max_min
+      from: "off"
+  sensor:
+      - name: "Attic Max TMP"
+        unique_id: '783905ac-5758-473d-8c14-6f04b99b9173'
+        state: >-
+          {% if ((state_attr('sensor.attic_max_tmp','last_valid_sensor_value')|float(states('sensor.attic_temperature'))|float 
+            - states('sensor.attic_temperature')|float)|abs < states('input_number.max_temp_step')|float) 
+            and (states('sensor.attic_temperature')|float > states('sensor.attic_max_tmp')|float(-10)) %}
+            {{ states('sensor.attic_temperature') }}
+          {% else %}
+            {{ states('sensor.attic_max_tmp') }}
+          {% endif %}
+        unit_of_measurement: "ºC"
+        icon: mdi:thermometer-chevron-up
+        attributes:
+          last_update: >-
+            {% if ((state_attr('sensor.attic_max_tmp','last_valid_sensor_value')|float(states('sensor.attic_temperature'))|float 
+              - states('sensor.attic_temperature')|float)|abs < states('input_number.max_temp_step')|float)
+              and (states('sensor.attic_temperature')|float > states('sensor.attic_max_tmp')|float(-10)) %}
+              {{ now() }}
+            {% else %}
+              {{ state_attr('sensor.attic_max_tmp','last_update') }}
+            {% endif %}
+          last_valid_sensor_value: >-
+            {% if ((state_attr('sensor.attic_max_tmp','last_valid_sensor_value')|float(states('sensor.attic_temperature'))|float 
+              - states('sensor.attic_temperature')|float)|abs < states('input_number.max_temp_step')|float) %}
+              {{ states('sensor.attic_temperature') }}
+            {% else %}
+              {{ state_attr('sensor.attic_max_tmp','last_valid_sensor_value') }}
+            {% endif %}
+
+
+- trigger:
+    - platform: state
+      entity_id: sensor.front_door_temperature_door  # Source sensor
+    - platform: state
+      entity_id: input_number.max_temp_step
+    - platform: state
+      entity_id: input_boolean.reset_max_min
+      from: "off"
+  sensor:
+      - name: "Front Door Max TMP"
+        unique_id: '652d2322-285b-48f8-b05b-3ef1c37653f2'
+        state: >-
+          {% if ((state_attr('sensor.front_door_max_tmp','last_valid_sensor_value')|float(states('sensor.front_door_temperature_door'))|float 
+            - states('sensor.front_door_temperature_door')|float)|abs < states('input_number.max_temp_step')|float) 
+            and (states('sensor.front_door_temperature_door')|float > states('sensor.front_door_max_tmp')|float(-10)) %}
+            {{ states('sensor.front_door_temperature_door') }}
+          {% else %}
+            {{ states('sensor.front_door_max_tmp') }}
+          {% endif %}
+        unit_of_measurement: "ºC"
+        icon: mdi:thermometer-chevron-up
+        attributes:
+          last_update: >-
+            {% if ((state_attr('sensor.front_door_max_tmp','last_valid_sensor_value')|float(states('sensor.front_door_temperature_door'))|float 
+              - states('sensor.front_door_temperature_door')|float)|abs < states('input_number.max_temp_step')|float)
+              and (states('sensor.front_door_temperature_door')|float > states('sensor.front_door_max_tmp')|float(-10)) %}
+              {{ now() }}
+            {% else %}
+              {{ state_attr('sensor.front_door_max_tmp','last_update') }}
+            {% endif %}
+          last_valid_sensor_value: >-
+            {% if ((state_attr('sensor.front_door_max_tmp','last_valid_sensor_value')|float(states('sensor.front_door_temperature_door'))|float 
+              - states('sensor.front_door_temperature_door')|float)|abs < states('input_number.max_temp_step')|float) %}
+              {{ states('sensor.front_door_temperature_door') }}
+            {% else %}
+              {{ state_attr('sensor.front_door_max_tmp','last_valid_sensor_value') }}
+            {% endif %}

@@ -11,7 +11,9 @@
   action:
     - service: alarm_control_panel.alarm_arm_away
       target:
-        entity_id: alarm_control_panel.intrusion_alarm
+        entity_id:
+          - alarm_control_panel.intrusion_alarm
+          - alarm_control_panel.wellington_mode
 
 - alias: "Alarm, 'disarm alarm' when anyone home"
   id: '962edbd8-70c0-4998-9ce5-de50045b007d'
@@ -25,3 +27,6 @@
         entity_id: alarm_control_panel.intrusion_alarm
       data: 
           code: !secret disarm_code
+    - service: alarm_control_panel.alarm_disarm
+      target:
+        entity_id: alarm_control_panel.wellington_mode

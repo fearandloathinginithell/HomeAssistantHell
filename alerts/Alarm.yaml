@@ -1,0 +1,11 @@
+# Disabled for now, no advantage over automation alerts
+#  alarm:
+#    name: Alarm Triggered
+#    entity_id: alarm_control_panel.intrusion_alarm
+#    state: "triggered"
+#    repeat: 5
+#    can_acknowledge: true
+#    skip_first: false
+#    message:  "The alarm has been triggered by the {{ states('input_text.trigger_source') }} at {{now().strftime('%H:%M %d-%m-%Y')}}." 
+#    notifiers:
+#      - Notify_Information

@@ -11,7 +11,8 @@
     platform: group
     services:
       - service: mobile_app_madness
-  - name: Notify_Alexa
+  - name: Notify_Alexa_All
+  # https://community.home-assistant.io/t/notify-group-including-multiple-alexa/432889/2
     platform: group
     services:
       - service: alexa_media

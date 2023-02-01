@@ -24,7 +24,11 @@
     at: 
         - "23:00:00"
         - "23:30:00"
-        - "23:59:00"
+        - "23:59:59"
+  condition:
+  - condition: state
+    entity_id: binary_sensor.ranch_slider_state
+    state: 'off'
   action:
   - service: cover.close_cover
     entity_id: cover.lounge_south_east

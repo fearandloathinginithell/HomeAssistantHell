@@ -2,23 +2,24 @@
 default_config:
 
 homeassistant:
-  name: "Château de Pōneke"
-  latitude: !secret latitude
-  longitude: !secret longitude
-  elevation: !secret elevation
-  unit_system: metric
-  currency: NZD
-  temperature_unit: C
-  time_zone: "Pacific/Auckland"
-  # external_url: !secret external_url
-  internal_url: !secret internal_url
-  customize: !include customize.yaml
-  customize_glob: !include customize_glob.yaml
   auth_mfa_modules:
     - type: totp
+  country: NZ
+  currency: NZD
+  customize: !include customize.yaml
+  customize_glob: !include customize_glob.yaml
+  elevation: !secret elevation
+  internal_url: !secret internal_url
+  latitude: !secret latitude
+  longitude: !secret longitude
+  name: "Château de Pōneke"
+  temperature_unit: C
+  time_zone: "Pacific/Auckland"
+  unit_system: metric
 
 wake_on_lan:
-# unifi protect
+
+  # unifi protect
 stream:
 
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
@@ -40,6 +41,7 @@ template: !include_dir_merge_list template/
 
 mqtt:
   sensor: !include_dir_merge_list mqtt/sensor/
+  switch: !include_dir_merge_list mqtt/switch/
 
 # https://community.home-assistant.io/t/touchpad-for-manual-alarm-control-panel-supports-multiple-user-codes/357688
 # https://www.home-assistant.io/integrations/manual/
@@ -91,3 +93,16 @@ input_text:
 # https://community.home-assistant.io/t/notification-to-state-which-sensor-triggered-manual-alarm/146071/7
     trigger_source:
       name: Trigger Source
+
+input_number:
+  max_temp_step:
+    name: Max temp step
+    min: 0
+    max: 20
+    initial: 5
+
+input_boolean:
+  reset_max_min:
+    name: Reset max min
+    initial: False
+    icon: mdi:alert

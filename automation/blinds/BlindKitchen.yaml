@@ -9,7 +9,7 @@
   condition:
   - not:
     - condition: state
-      entity_id: binary_sensor.kitchen_window
+      entity_id: binary_sensor.kitchen_window_state
       state: 'on'
   action:
   - service: cover.close_cover

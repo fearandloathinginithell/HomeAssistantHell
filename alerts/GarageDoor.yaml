@@ -1,0 +1,24 @@
+  garage_door:
+    name: Garage is open
+    entity_id: binary_sensor.garage_roller_door_external_input
+    state: "on"
+    repeat: 
+      - 5
+      - 15
+      - 30
+      - 60
+    can_acknowledge: false
+    skip_first: false
+    message: >
+      {{ expand('group.garage_doors') | selectattr('state', 'eq', 'on') | map(attribute='attributes.friendly_name') | list | join(', ') }}
+      OPEN for {{ relative_time(states.binary_sensor.garage_roller_door_external_input.last_changed) }}
+      since {{ as_timestamp(states.binary_sensor.garage_roller_door_external_input.last_changed) | timestamp_custom('%H:%M') }}
+    done_message: >
+      {{ expand('group.garage_doors') | selectattr('state', 'eq', 'off') | map(attribute='attributes.friendly_name') | list | join(', ') }}
+      now CLOSED {{ as_timestamp(states.binary_sensor.garage_roller_door_external_input.last_changed) | timestamp_custom('%A %H:%M') }}
+    notifiers:
+      - Notify_Information
+      - Notify_Alexa_All
+    # https://www.home-assistant.io/integrations/alert
+    # https://community.home-assistant.io/t/simple-and-effective-alerting/394027
+    # https://docs.python.org/3/library/time.html#time.strftime
