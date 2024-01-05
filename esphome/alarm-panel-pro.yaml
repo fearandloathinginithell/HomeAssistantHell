@@ -1,0 +1,217 @@
+####
+## Derived from 
+## GitHub: https://github.com/konnected-io/konnected-esphome
+## https://install.konnected.io/esphome
+## Pinouts
+## https://help.konnected.io/support/solutions/articles/32000028978-inputs-and-outputs
+####
+substitutions:
+  name: alarm-panel-pro-0e05d0
+  friendly_name: Alarm Panel Pro
+  project_name:  fearandloathinginithell.alarm-panel-pro-esp32
+  device_description: "Konnected pro ESPHome"
+  project_version: "0.1.0"
+
+  # Webserver credentials ⬇ #
+  web_username: !secret alarm-panel-pro-0e05d0_web_username
+  web_password: !secret alarm-panel-pro-0e05d0_web_password
+
+  # Update credentials ⬇ #
+  ota_password: !secret alarm-panel-pro-0e05d0_ota_password
+
+  # API credentials ⬇ #
+  api_encryption_key: !secret alarm-panel-pro-0e05d0_api_encryption_key
+  
+  status_led_inverted: "false" #<<core-esp32.yaml
+  sensor_debounce_time: 200ms
+  warning_beep_pulse_time: 100ms
+  warning_beep_pause_time: 130ms
+  warning_beep_internal_only: "false"
+
+  ####
+  # ZONE MAPPING
+  # Do not edit this section.
+  zone1: GPIO4
+  zone2: GPIO2
+  zone3: GPIO15
+  zone4: GPIO13
+  zone5: GPIO18
+  zone6: GPIO14
+  zone7: GPIO33
+  zone8: GPIO32
+  zone9: GPIO36
+  zone10: GPIO39
+  zone11: GPIO34
+  zone12: GPIO35
+  alarm1: GPIO12
+  alarm2: GPIO5
+  out1: GPIO23
+  out2: GPIO5
+  status_led: GPIO3
+  
+  ####
+  # CONNECTION MAPPINGS
+  warning_beep_pin: $zone3
+
+esphome: #<<core-esp32.yaml
+  name: $name
+  comment: $device_description
+  project:
+    name: $project_name
+    version: $project_version
+
+esp32:  #<<core-esp32.yaml
+  board: wesp32
+  framework:
+    type: arduino
+    version: recommended
+
+ethernet: #<<ethernet.yaml
+  type: LAN8720 # Alarm Panel Pro up to 1.7
+  mdc_pin: GPIO16
+  mdio_pin: GPIO17
+  clk_mode: GPIO0_IN
+  phy_addr: 0
+
+# INPUT ZONE COMMON SETTINGS
+.input_zone_common: &input_zone_common
+  platform: gpio   
+  filters:
+    - delayed_on_off: $sensor_debounce_time
+  on_state:
+    then:
+      - light.turn_on: blue_status_led
+      - delay: 100ms
+      - light.turn_off: blue_status_led
+
+# DS18B20 digital thermometer
+dallas:
+  pin: $zone1
+
+binary_sensor:
+  - id: zone7    
+    name: !secret alarm-panel-pro-0e05d0_zone7_name
+    device_class: !secret alarm-panel-pro-0e05d0_zone7_class
+    pin:
+      number: $zone7
+      mode: INPUT_PULLUP
+    <<: *input_zone_common
+
+  - id: zone8
+    name: !secret alarm-panel-pro-0e05d0_zone8_name
+    device_class: !secret alarm-panel-pro-0e05d0_zone8_class
+    pin:
+      number: $zone8
+      mode: INPUT_PULLUP
+    <<: *input_zone_common
+
+  - id: zone9
+    name: !secret alarm-panel-pro-0e05d0_zone9_name
+    device_class: !secret alarm-panel-pro-0e05d0_zone9_class
+    pin:
+      number: $zone9
+      mode: INPUT
+    <<: *input_zone_common
+
+  - id: zone10
+    name: !secret alarm-panel-pro-0e05d0_zone10_name
+    device_class: !secret alarm-panel-pro-0e05d0_zone10_class
+    pin:
+      number: $zone10
+      mode: INPUT
+    <<: *input_zone_common
+
+  - id: zone11
+    name: !secret alarm-panel-pro-0e05d0_zone11_name
+    device_class: !secret alarm-panel-pro-0e05d0_zone11_class 
+    pin:
+      number: $zone11
+      mode: INPUT
+    <<: *input_zone_common
+
+  - id: zone12
+    name: !secret alarm-panel-pro-0e05d0_zone12_name
+    device_class: !secret alarm-panel-pro-0e05d0_zone12_class 
+    pin:
+      number: $zone12
+      mode: INPUT
+    <<: *input_zone_common
+
+# Zone mode: INPUT_PULLUP
+# 1,2,3,4,5,6,7,8
+
+# Zone mode: INPUT
+# 9,10,11,12
+
+button:
+  - platform: restart
+    name: "Restart - $name"
+
+light: #<<status-led.yaml
+  - platform: status_led
+    id: blue_status_led
+    pin:
+      number: $status_led
+      inverted: $status_led_inverted
+      
+  - id: warning_beep
+    name: Warning Beep #<<warning-beep.yaml
+    platform: binary
+    output: buzzer_output
+    effects:
+      - strobe:
+          colors:
+            - state: true
+              duration: $warning_beep_pulse_time
+            - state: false
+              duration: $warning_beep_pulse_time
+    internal: $warning_beep_internal_only
+
+output: #<<warning-beep.yaml
+  - id: buzzer_output
+    platform: gpio
+    pin: $warning_beep_pin
+
+sensor:
+  - platform: dallas
+    address: 0xbe00000e81233328
+    name: "Attic Temperature"
+
+switch:   
+  - id: alarm1
+    name: Internal Siren
+    pin: $alarm1
+    platform: gpio
+    icon: mdi:bullhorn
+
+  - id: alarm2
+    name: External Siren
+    pin: $alarm2
+    platform: gpio
+    icon: mdi:bullhorn
+
+text_sensor: #<<ethernet.yaml
+  - platform: ethernet_info
+    ip_address:
+      name: $friendly_name Ethernet IP Address
+      entity_category: diagnostic
+  
+dashboard_import:
+  package_import_url: github://fearandloathinginithell/alarm-panel-pro-esp32/alarm-panel-pro-esp32.yaml@master
+  import_full_config: true
+
+web_server:
+  include_internal: true
+  port: 80
+  auth:
+    username: '${web_username}'
+    password: '${web_password}'
+
+logger:
+
+api:
+  encryption:
+    key: '${api_encryption_key}'
+
+ota:
+  password: '${ota_password}'

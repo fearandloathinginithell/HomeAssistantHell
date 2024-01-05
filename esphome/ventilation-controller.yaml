@@ -1,0 +1,84 @@
+# https://www.elec-cafe.com/use-wemos-d1-mini-and-ds18b20-sensor-monitor-temperature-on-home-assistant/
+
+substitutions:
+
+  ####
+  # NAME
+  name: ventilation-controller
+  friendly_name: DVS Ventilation Controller
+  project_name:  fearandloathinginithell.ventilation-controller
+  device_description: "DVS Ventilation Controller"
+  project_version: "0.0.1"
+
+  # Webserver credentials ⬇ #
+  web_username: !secret ventilation-controller_web_username
+  web_password: !secret ventilation-controller_web_password
+
+  # Update credentials ⬇ #
+  ota_password: !secret ventilation-controller_ota_password
+
+  # API credentials ⬇ #
+  api_encryption_key: !secret ventilation-controller_api_encryption_key
+
+  # Captive portal ⬇ #
+  captive_ssid: !secret ventilation-controller_captive_ssid
+  captive_password: !secret ventilation-controller_captive_password
+  
+  # WiFi SSID ⬇ #
+  wifi_ssid: !secret wifi_ssid
+  wifi_password: !secret wifi_password
+
+# DS18B20 Temperature Sensor
+dallas:
+  - pin: D5
+
+esphome:
+  name: ventilation-controller
+  friendly_name: ventilation-controller
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: '${wifi_ssid}'
+  password: '${wifi_password}'
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: '${captive_ssid}'
+    password: '${captive_password}'
+
+# sensor:
+#   - platform: dallas
+#     address: 0x15000006F3A18128
+#     name: "WeMos D1 Mini Temperature"
+
+
+####
+# WEB SEVER
+# Enables the built-in web server for viewing the device state, internals and controls via web browser
+# on the same local network as the device.
+web_server:
+  include_internal: true
+  port: 80
+  auth:
+    username: '${web_username}'
+    password: '${web_password}'
+
+#### 
+# LOGGER
+# more: https://esphome.io/components/logger.html
+logger:
+
+####
+# NATIVE API for HOME ASSISTANT
+# Enables the native API for Home Assistant
+# more: https://esphome.io/components/api.html
+api:
+  encryption:
+    key: '${api_encryption_key}'
+
+#### 
+# OTA UPDATES
+# Enables over-the-air updates
+# more: https://esphome.io/components/ota.html
+ota:
+  password: '${ota_password}'

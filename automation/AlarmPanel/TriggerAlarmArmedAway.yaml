@@ -2,13 +2,16 @@
   id: '9b46a0f4-96aa-4aa6-b520-de4882fdb915'
   trigger:
     - platform: state
-      entity_id: binary_sensor.alarm_motion_lounge
+      entity_id: binary_sensor.living_room_motion_3
       to: "on"
     - platform: state
-      entity_id: binary_sensor.alarm_motion_kitchen
+      entity_id: binary_sensor.garage_motion
       to: "on"
     - platform: state
-      entity_id: binary_sensor.alarm_motion_hallway
+      entity_id: binary_sensor.kitchen_motion
+      to: "on"
+    - platform: state
+      entity_id: binary_sensor.hallway_motion
       to: "on"
     - platform: state
       entity_id: binary_sensor.north_window_left_state

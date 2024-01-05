@@ -4,6 +4,11 @@
     - platform: state
       entity_id: group.any_alarm_users_home
       to: "not_home"
+    - platform: event
+      event_type: homekit_state_change
+      event_data:
+        entity_id: alarm_control_panel.intrusion_alarm
+        service: alarm_arm_away
   condition:
     - condition: state
       entity_id: input_boolean.guest_mode
@@ -15,12 +20,17 @@
           - alarm_control_panel.intrusion_alarm
           - alarm_control_panel.wellington_mode
 
-- alias: "Alarm, 'disarm alarm' when anyone home"
+- alias: "Alarm, 'disarm alarm' when anyone home, homekit disarm"
   id: '962edbd8-70c0-4998-9ce5-de50045b007d'
   trigger:
     - platform: state
       entity_id: group.any_alarm_users_home
       to: "home"
+    - platform: event
+      event_type: homekit_state_change
+      event_data:
+        entity_id: alarm_control_panel.intrusion_alarm
+        service: alarm_disarm
   action:
     - service: alarm_control_panel.alarm_disarm
       target:
@@ -30,3 +40,13 @@
     - service: alarm_control_panel.alarm_disarm
       target:
         entity_id: alarm_control_panel.wellington_mode
+
+
+#    - platform: event
+#      event_type: homekit_state_change
+#      event_data:
+#        entity_id: alarm_control_panel.intrusion_alarm
+#        service: alarm_disarm
+#    entity_id: alarm_control_panel.intrusion_alarm
+#    display_name: Intrusion alarm
+#    service: alarm_arm_away

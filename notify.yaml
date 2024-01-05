@@ -23,3 +23,8 @@
             - media_player.master_bedroom
           data:
             type: tts
+  - name: Notify_Apple_Home_All
+    platform: group
+    services:
+      - service: cloud_say
+        entity_id: media_player.master_bedroom_2

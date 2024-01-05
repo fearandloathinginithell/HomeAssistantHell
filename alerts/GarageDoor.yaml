@@ -19,6 +19,7 @@
     notifiers:
       - Notify_Information
       - Notify_Alexa_All
+      - Notify_Apple_Home_All
     # https://www.home-assistant.io/integrations/alert
     # https://community.home-assistant.io/t/simple-and-effective-alerting/394027
     # https://docs.python.org/3/library/time.html#time.strftime

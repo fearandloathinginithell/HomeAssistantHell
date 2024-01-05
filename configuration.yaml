@@ -26,8 +26,9 @@ stream:
 alert: !include_dir_merge_named alerts/
 automation: !include_dir_merge_list automation/
 binary_sensor: !include_dir_merge_list binary_sensor/
+command_line: !include_dir_merge_list command_line/
 cloud: !include cloud.yaml
-cover: !include_dir_merge_list cover/
+# cover: !include_dir_merge_list cover/
 group: !include groups.yaml
 input_select: !include input_select/people.yaml
 # konnected: !include konnected.yaml
@@ -45,6 +46,7 @@ mqtt:
 
 # https://community.home-assistant.io/t/touchpad-for-manual-alarm-control-panel-supports-multiple-user-codes/357688
 # https://www.home-assistant.io/integrations/manual/
+# https://www.home-assistant.io/integrations/alarm_control_panel.template/
 alarm_control_panel:
   - platform: manual
     name: Intrusion alarm
@@ -61,10 +63,21 @@ alarm_control_panel:
       delay_time: 0
       arming_time: 0
 
+# https://www.home-assistant.io/integrations/homekit/
+homekit:
+  - filter:
+      include_entities:
+        - alarm_control_panel.intrusion_alarm
+        - light.living_room_lights
+    entity_config:
+      alarm_control_panel.intrusion_alarm:
+        code: !secret disarm_code
+
 http:
   use_x_forwarded_for: true
   trusted_proxies:
-    - !secret trusted_proxies
+    - !secret trusted_proxy1
+    - !secret trusted_proxy2
   ip_ban_enabled: true
   login_attempts_threshold: 5
 
