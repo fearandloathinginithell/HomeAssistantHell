@@ -1,0 +1,18 @@
+  monitored_doors_open:
+    name: monitored door is open
+    entity_id: binary_sensor.kitchen_door
+    state: "on"
+    repeat: 
+      - 30
+    can_acknowledge: false
+    skip_first: false
+    message: >-
+      <audio
+        src="soundbank://soundlibrary/computers/beeps_tones/beeps_tones_10"/>
+      {{ expand('group.monitored_doors') | selectattr('state', 'eq', 'on') | map(attribute='attributes.friendly_name') | list | join(', ') }}
+      Open
+    notifiers:
+      - Notify_Alexa_All
+    # https://www.home-assistant.io/integrations/alert
+    # https://community.home-assistant.io/t/simple-and-effective-alerting/394027
+    # https://docs.python.org/3/library/time.html#time.strftime

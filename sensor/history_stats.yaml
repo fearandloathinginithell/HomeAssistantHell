@@ -1,0 +1,26 @@
+  - platform: history_stats
+    name: Dryer test Running
+    unique_id: 66e0ca06-fa3f-4ac2-b715-e4f885def89e
+    entity_id: binary_sensor.clothes_dryer_accelerometer # or whaterver it is called
+    state: 'on'
+    type: time
+    start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+    end: '{{ now() }}'
+# https://www.home-assistant.io/integrations/history_stats/
+# https://community.home-assistant.io/t/show-hours-and-minutes-not-decimal-hours-in-history-stats/137069/5
+# https://community.home-assistant.io/t/show-hours-and-minutes-not-decimal-hours-in-history-stats/137069/3
+  - platform: template
+    sensors:
+      dryer_running_5:
+        value_template: >
+          {% set hours = states('sensor.dryer_test_running') | float %} 
+          {% set minutes = ((hours % 1) * 60) | int %}  
+          {% set hours = (hours - (hours % 1)) | int %}  
+          {{ '%02i.%02i'%(hours, minutes) }}
+
+  - platform: template
+    sensors:
+      dryer_running_6:
+        value_template: >
+          {{ timedelta(hours=states('sensor.dryer_test_running') | float(0)) }}
+

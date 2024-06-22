@@ -85,8 +85,9 @@ ethernet: #<<ethernet.yaml
       - light.turn_off: blue_status_led
 
 # DS18B20 digital thermometer
-dallas:
-  pin: $zone1
+one_wire:
+  - platform: gpio
+    pin: $zone1
 
 binary_sensor:
   - id: zone7    
@@ -173,7 +174,7 @@ output: #<<warning-beep.yaml
     pin: $warning_beep_pin
 
 sensor:
-  - platform: dallas
+  - platform: dallas_temp
     address: 0xbe00000e81233328
     name: "Attic Temperature"
 
@@ -214,4 +215,5 @@ api:
     key: '${api_encryption_key}'
 
 ota:
-  password: '${ota_password}'
+  - platform: esphome
+    password: '${ota_password}'

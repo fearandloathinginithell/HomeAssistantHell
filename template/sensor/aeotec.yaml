@@ -17,3 +17,15 @@
           {% else %}
             mdi:connection
           {% endif %}
+# https://community.home-assistant.io/t/check-an-entitys-previous-state/694899/10
+# https://www.home-assistant.io/integrations/template/
+#  - trigger:
+#      - platform: state
+#        entity_id: binary_sensor.clothes_dryer_accelerometer
+#        to: 'on'
+#    sensor:
+#      - name: Dryer Running
+#        state: >
+#          {{ (now() - trigger.from_state.last_changed).total_seconds()
+#            | timestamp_custom('%-H hr %-M min %-S sec', false) }}      
+

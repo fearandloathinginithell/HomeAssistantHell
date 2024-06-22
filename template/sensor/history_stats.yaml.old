@@ -1,0 +1,13 @@
+# https://community.home-assistant.io/t/show-hours-and-minutes-not-decimal-hours-in-history-stats/137069/3
+  - sensor:
+      dryer_running:
+        value_template: >
+          {% set hours = states('sensor.dryer_test_running') | float %} 
+          {% set minutes = ((hours % 1) * 60) | int %}  
+          {% set hours = (hours - (hours % 1)) | int %}  
+          {{ '%02i.%02i'%(hours, minutes) }}
+
+  - sensor:
+      dryer_running_2:
+        state: >
+          {{ timedelta(hours=states('sensor.dryer_test_running) | float(0)) }}

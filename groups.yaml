@@ -25,6 +25,8 @@
     entities:
       - person.matt
       - person.suze
+      - person.margaret
+      - person.peter
 
   all_alarm_users_home:
     # Will report 'Away' if any user away, Home if all users Home
@@ -34,6 +36,8 @@
     entities:
       - person.matt
       - person.suze
+      - person.margaret
+      - person.peter
   
   alexas:
     # https://github.com/custom-components/alexa_media_player/wiki#setting-up-a-last-alexa-sensor
@@ -50,3 +54,18 @@
     icon: mdi:garage-variant
     entities:
       - binary_sensor.garage_roller_door_external_input
+
+  Monitored Doors:
+    # https://community.home-assistant.io/t/simple-and-effective-alerting/394027#simple-and-effective-alerting-1
+    name: "Monitored doors group"
+    all: false
+    icon: mdi:door
+    entities:
+      - binary_sensor.kitchen_door
+
+
+
+
+
+
+

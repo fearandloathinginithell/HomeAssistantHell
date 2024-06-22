@@ -29,6 +29,10 @@ binary_sensor: !include_dir_merge_list binary_sensor/
 command_line: !include_dir_merge_list command_line/
 cloud: !include cloud.yaml
 # cover: !include_dir_merge_list cover/
+# https://www.home-assistant.io/integrations/ffmpeg/
+# https://community.home-assistant.io/t/installing-ffmpeg/271976/6
+ffmpeg:
+  ffmpeg_bin: /usr/bin/ffmpeg
 group: !include groups.yaml
 input_select: !include input_select/people.yaml
 # konnected: !include konnected.yaml
@@ -69,6 +73,9 @@ homekit:
       include_entities:
         - alarm_control_panel.intrusion_alarm
         - light.living_room_lights
+        - light.dining_north_west_lights
+        - light.lounge_north_east_lights
+        - light.lounge_south_east_lights
     entity_config:
       alarm_control_panel.intrusion_alarm:
         code: !secret disarm_code

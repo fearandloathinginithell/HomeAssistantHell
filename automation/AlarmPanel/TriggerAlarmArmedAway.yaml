@@ -2,34 +2,20 @@
   id: '9b46a0f4-96aa-4aa6-b520-de4882fdb915'
   trigger:
     - platform: state
-      entity_id: binary_sensor.living_room_motion_3
+      entity_id:
+        - binary_sensor.living_room_motion_3
+        - binary_sensor.garage_motion
+        - binary_sensor.kitchen_motion
+        - binary_sensor.hallway_motion
+        - binary_sensor.north_window_left_state
+        - binary_sensor.north_window_right_state
+        - binary_sensor.master_bedroom_window_state
+        - binary_sensor.kitchen_window
+        - binary_sensor.alarm_motion_garage
       to: "on"
     - platform: state
-      entity_id: binary_sensor.garage_motion
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.kitchen_motion
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.hallway_motion
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.north_window_left_state
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.north_window_right_state
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.master_bedroom_window_state
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.kitchen_window
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.alarm_motion_garage
-      to: "on"
-    - platform: state
-      entity_id: binary_sensor.garage_roller_door_external_input
+      entity_id: 
+        - binary_sensor.garage_door
       to: "off"
   condition:
     - condition: state

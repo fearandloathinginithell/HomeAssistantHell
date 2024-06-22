@@ -14,7 +14,7 @@
     state: 'off'
   action:
   - service: cover.close_cover
-    entity_id: cover.dining_north_west
+    entity_id: cover.blind_dining_nw
 
 - alias: 'Blind, dining northwest open sunrise'
   id: '92cb6671-b329-4ba7-bb2f-a4b26171008a'
@@ -24,4 +24,4 @@
     offset: "00:00:25"
   action:
   - service: cover.open_cover
-    entity_id: cover.dining_north_west
+    entity_id: cover.blind_dining_nw

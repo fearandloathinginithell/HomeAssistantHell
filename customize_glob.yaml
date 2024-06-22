@@ -1,13 +1,13 @@
 # https://www.home-assistant.io/docs/configuration/customizing-devices/
-cover.lounge_*:
-  icon: mdi:blinds
-  device_class: Blind
-cover.dining_*:
-  icon: mdi:blinds
-  device_class: Blind
-cover.kitchen:
-  icon: mdi:blinds
-  device_class: Blind
-cover.bedroom_*:
-  icon: mdi:blinds
-  device_class: Blind
+# cover.lounge_*:
+#   icon: mdi:blinds
+#   device_class: Blind
+# cover.dining_*:
+#   icon: mdi:blinds
+#   device_class: Blind
+# cover.kitchen:
+#   icon: mdi:blinds
+#   device_class: Blind
+# cover.bedroom_*:
+#   icon: mdi:blinds
+#   device_class: Blind
