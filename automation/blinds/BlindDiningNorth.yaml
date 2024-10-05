@@ -5,15 +5,15 @@
   - platform: sun
     event: sunset
     offset: "00:00:30"
-  condition:
-  - condition: state
-    entity_id: binary_sensor.north_window_left_state
-    state: 'off'
-  - condition: state
-    entity_id: binary_sensor.north_window_right_state
-    state: 'off'
+#  condition:
+#  - condition: state
+#    entity_id: binary_sensor.north_window_left_state
+#    state: 'off'
+#  - condition: state
+#    entity_id: binary_sensor.north_window_right_state
+#    state: 'off'
   action:
-  - service: cover.close_cover
+  - action: cover.close_cover
     entity_id: cover.dining_north
 
 - alias: 'Blind, dining north open sunrise'
@@ -23,5 +23,5 @@
     event: sunrise
     offset: "00:00:30"
   action:
-  - service: cover.open_cover
+  - action: cover.open_cover
     entity_id: cover.dining_north

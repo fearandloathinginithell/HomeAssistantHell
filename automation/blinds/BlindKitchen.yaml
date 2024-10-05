@@ -12,7 +12,7 @@
       entity_id: binary_sensor.kitchen_window_state
       state: 'on'
   action:
-  - service: cover.close_cover
+  - action: cover.close_cover
     entity_id: cover.kitchen
 
 - alias: 'Blind, kitchen open sunrise'
@@ -22,5 +22,5 @@
     event: sunrise
     offset: "00:00:05"
   action:
-  - service: cover.open_cover
+  - action: cover.open_cover
     entity_id: cover.kitchen

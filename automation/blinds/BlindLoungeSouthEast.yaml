@@ -14,7 +14,7 @@
         entity_id: group.any_alarm_users_home
         state: 'not_home'
   action:
-      - service: cover.close_cover
+      - action: cover.close_cover
         entity_id: cover.lounge_south_east
 
 - alias: 'Blind, lounge southeast close 23:00'
@@ -30,7 +30,7 @@
     entity_id: binary_sensor.ranch_slider_state
     state: 'off'
   action:
-  - service: cover.close_cover
+  - action: cover.close_cover
     entity_id: cover.lounge_south_east
 
 - alias: 'Blind, lounge southeast open sunrise'
@@ -40,5 +40,5 @@
     event: sunrise
     offset: "00:00:10"
   action:
-  - service: cover.open_cover
+  - action: cover.open_cover
     entity_id: cover.lounge_south_east

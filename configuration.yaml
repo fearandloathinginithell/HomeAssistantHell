@@ -17,112 +17,38 @@ homeassistant:
   time_zone: "Pacific/Auckland"
   unit_system: metric
 
-wake_on_lan:
-
-  # unifi protect
-stream:
-
 # https://www.home-assistant.io/docs/configuration/splitting_configuration/
+alarm_control_panel: !include alarm_control_panel/alarm_control_panel.yaml
 alert: !include_dir_merge_named alerts/
 automation: !include_dir_merge_list automation/
 binary_sensor: !include_dir_merge_list binary_sensor/
 command_line: !include_dir_merge_list command_line/
 cloud: !include cloud.yaml
 # cover: !include_dir_merge_list cover/
-# https://www.home-assistant.io/integrations/ffmpeg/
-# https://community.home-assistant.io/t/installing-ffmpeg/271976/6
-ffmpeg:
-  ffmpeg_bin: /usr/bin/ffmpeg
+ffmpeg: !include  ffmpeg/ffmpeg.yaml
 group: !include groups.yaml
-input_select: !include input_select/people.yaml
-# konnected: !include konnected.yaml
+homekit: !include homekit/homekit.yaml
+http: !include http/http.yaml
+input_boolean: !include input/input_boolean.yaml
+input_number: !include input/input_number.yaml
+input_select: !include input/input_people.yaml
+input_text: !include input/input_text.yaml
+mqtt: !include mqtt/mqtt.yaml
 notify: !include notify.yaml
 recorder: !include recorder.yaml
 scene: !include scenes.yaml
 script: !include_dir_merge_named scripts/
 sensor: !include_dir_merge_list sensor/
+stream: # unifi protect
 switch: !include_dir_merge_list switch/
 template: !include_dir_merge_list template/
+wake_on_lan:
+waste_collection_schedule: !include waste_collection/waste_collection.yaml
+zha: !include zha/zha.yaml
 
-mqtt:
-  sensor: !include_dir_merge_list mqtt/sensor/
-  switch: !include_dir_merge_list mqtt/switch/
-
-# https://community.home-assistant.io/t/touchpad-for-manual-alarm-control-panel-supports-multiple-user-codes/357688
-# https://www.home-assistant.io/integrations/manual/
-# https://www.home-assistant.io/integrations/alarm_control_panel.template/
-alarm_control_panel:
-  - platform: manual
-    name: Intrusion alarm
-    code: !secret disarm_code
-    code_arm_required: false
-    trigger_time: 120 # Default
-    armed_away:
-      delay_time: 0
-      arming_time: 10
-    armed_home:
-      delay_time: 20
-      arming_time: 10
-    armed_night:
-      delay_time: 0
-      arming_time: 0
-
-# https://www.home-assistant.io/integrations/homekit/
-homekit:
-  - filter:
-      include_entities:
-        - alarm_control_panel.intrusion_alarm
-        - light.living_room_lights
-        - light.dining_north_west_lights
-        - light.lounge_north_east_lights
-        - light.lounge_south_east_lights
-    entity_config:
-      alarm_control_panel.intrusion_alarm:
-        code: !secret disarm_code
-
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - !secret trusted_proxy1
-    - !secret trusted_proxy2
-  ip_ban_enabled: true
-  login_attempts_threshold: 5
-
-zha:
-  zigpy_config:
-    ota:
-      otau_directory: /config/zigpy_ota
-      ikea_provider: true
-#      ikea_update_url: http://fw.test.ota.homesmart.ikea.net/feed/version_info.json
-      ledvance_provider: false
-      salus_provider: false
 
 # Switch to lights
 # light:
 #  - platform: switch
 #    name: Bedside Light Right-Hand Switch
 #    entity_id: switch.shelly_1pm_40f52001c859_relay_0
-          
-input_text:
-    touchpad_code:
-      name: Touchpad code
-      #mode: password
-      pattern: "[0-9]*"
-      min: 0
-      max: 4
-# https://community.home-assistant.io/t/notification-to-state-which-sensor-triggered-manual-alarm/146071/7
-    trigger_source:
-      name: Trigger Source
-
-input_number:
-  max_temp_step:
-    name: Max temp step
-    min: 0
-    max: 20
-    initial: 5
-
-input_boolean:
-  reset_max_min:
-    name: Reset max min
-    initial: False
-    icon: mdi:alert

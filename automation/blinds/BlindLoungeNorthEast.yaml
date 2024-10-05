@@ -13,7 +13,7 @@
     entity_id: binary_sensor.northeast_window_right_state
     state: 'off'
   action:
-  - service: cover.close_cover
+  - action: cover.close_cover
     entity_id: cover.lounge_north_east
 
 - alias: 'Blind, lounge northeast open sunrise'
@@ -23,5 +23,5 @@
     event: sunrise
     offset: "00:00:20"
   action:
-  - service: cover.open_cover
+  - action: cover.open_cover
     entity_id: cover.lounge_north_east

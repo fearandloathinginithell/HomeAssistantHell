@@ -9,7 +9,7 @@
     entity_id: binary_sensor.master_bedroom_window_state
     state: 'off'
   action:
-  - service: cover.close_cover
+  - action: cover.close_cover
     entity_id: cover.bedroom_master
 
 - alias: 'Blind, bedroom master open 06:15, weekdays'
@@ -26,7 +26,7 @@
     entity_id: input_boolean.holiday_home
     state: 'off'
   action:
-  - service: cover.open_cover
+  - action: cover.open_cover
     entity_id: cover.bedroom_master
 
 - alias: 'Blind, bedroom master open O8:30, weekends and holidays'
@@ -44,5 +44,5 @@
         entity_id: input_boolean.holiday_home
         state: 'on'
   action:
-  - service: cover.open_cover
+  - action: cover.open_cover
     entity_id: cover.bedroom_master

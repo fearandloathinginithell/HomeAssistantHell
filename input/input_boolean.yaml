@@ -1,0 +1,4 @@
+  reset_max_min:
+    name: Reset max min
+    initial: False
+    icon: mdi:alert

@@ -22,11 +22,12 @@
 !cover/command_line/*
 !esphome
 !esphome/*
-!input_select
-!input_select/*
+!input
+!input/*
 !mqtt
 !mqtt/*
 !mqtt/sensor/*
+!mqtt/switch/*
 !node-red
 !node-red/flows.json
 !python_scripts
@@ -47,7 +48,7 @@
 Assets/floorplans/house.jpg
 mqtt/switch/RingAlarm.yaml
 esphome/secrets.yaml
-input_select/people.yaml
+input/input_people.yaml
 ip_bans.yaml
 known_devices.yaml
 secrets.yaml
